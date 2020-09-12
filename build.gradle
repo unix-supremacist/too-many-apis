@@ -15,21 +15,47 @@ buildscript {
     }
 }
 
+//Loads the versions numbers from build.properties, this means most changes can be done there and not here.
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+//This adds a git commit dependent appendage to the file name, helps to differentiate stuff if you don't up the version.
+static def getVersionAppendage() {
+    def proc = "git rev-parse --short HEAD".execute()
+    proc.waitFor()
+    return "DEV." + proc.exitValue() ? proc.text.trim() : "GITBORK"
+}
+
 apply plugin: 'forge'
 
+//Assumes this and all related projects are JDK 8 based
 allprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 }
-//TODO Replace version, group and archivesBaseName
-version = "${config.examplemod.version}"
-group= "com.github.basdxz.examplemod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "examplemod"
+
+//TODO You should replace examplemod with your own modid
+ext.modid = "${config.project_modid}"
+ext.modname = "${config.project_name}"
+ext.modversion = "${config.project_version}"
+version = "1.7.10-" + modversion + "-" + getVersionAppendage()
+group = "${config.project_version}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "${config.project_modid}"
 
 minecraft {
+    //Version of Forge Mod Loader to use
     version = "1.7.10-10.13.4.1614-1.7.10"
+    //Directory where runClient or runServer executes from
     runDir = "run"
+    //
+    replaceIn "src/main/java/com/github/basdxz/examplemod/Reference.java"
+    replace "@MODID@", modid
+    replace "@NAME@", modname
+    replace "@VERSION@", "${config.project_version}"
 }
 
 dependencies {
@@ -45,23 +71,22 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 }
 
-processResources
-{
+processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'modid', project.modid
+    inputs.property 'name', project.modname
+    inputs.property 'version', project.modversion
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+
+        // replace version
+        expand 'modid':project.modid, 'name':project.modname, 'version':project.modversion
     }
-        
+
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
