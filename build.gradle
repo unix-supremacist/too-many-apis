@@ -23,13 +23,6 @@ allprojects {
     targetCompatibility = 1.8
 }
 
-//Loads the versions numbers from build.properties, this means most changes can be done there and not here.
-file "build.properties" withReader {
-    def prop = new Properties()
-    prop.load(it)
-    ext.config = new ConfigSlurper().parse prop
-}
-
 //This adds a git commit dependent appendage to the file name
 //Helps to differentiate artefacts if you don't up the version.
 static def getVersionAppendage() {
@@ -39,13 +32,13 @@ static def getVersionAppendage() {
 }
 
 //Loads configs from build.properties
-ext.modid = "${config.project_modid}"
-ext.modname = "${config.project_name}"
-ext.modversion = "${config.project_version}"
+ext.modid = "${project_modid}"
+ext.modname = "${project_name}"
+ext.modversion = "${project_version}"
 //Should follow: http://maven.apache.org/guides/mini/guide-naming-conventions.html
-group = "${config.project_group}"
+group = "${project_group}"
 //Follows modid by default, name of the *.jar
-archivesBaseName = "${config.project_modid}"
+archivesBaseName = "${project_modid}"
 //Appended to the end of the *.jar after archivesBaseName
 version = "1.7.10-" + modversion + "-" + getVersionAppendage()
 
@@ -58,7 +51,7 @@ minecraft {
     replaceIn "src/main/java/com/github/basdxz/examplemod/Reference.java"
     replace "@MODID@", modid
     replace "@NAME@", modname
-    replace "@VERSION@", "${config.project_version}"
+    replace "@VERSION@", "${project_version}"
 }
 
 /**
@@ -67,9 +60,14 @@ minecraft {
  * A good number of useful repos are included but commented out, with the exception of the GregTech maven for NEI and Waila
  */
 repositories {
+    mavenCentral()
     maven {
         name = "GregTech maven"
         url = "https://gregtech.overminddl1.com/"
+    }
+    maven {
+        name "OpenComputers maven"
+        url "http://maven.cil.li/"
     }
     //maven {
     //    name 'UsrvDE maven'
@@ -83,10 +81,6 @@ repositories {
     //    name 'MC Mod Dev maven'
     //    url 'https://maven.mcmoddev.com/'
     //}
-    maven {
-        name "OpenComputers maven"
-        url "http://maven.cil.li/"
-    }
     //maven {
     //    name "Tterrag maven"
     //    url "https://maven.tterrag.com/"
@@ -132,9 +126,11 @@ repositories {
  * intact. By default, you will have NEI and Waila preloaded.
  */
 dependencies {
-    compile "codechicken:CodeChickenCore:${config.codechickencore_version}:dev"
-    compile "codechicken:NotEnoughItems:${config.nei_version}:dev"
-    compile "mcp.mobius.waila:Waila:${config.waila_version}"
+    runtime name: "NotEnoughItems"      , group: "codechicken",         version: nei_version,   classifier: "dev"
+    runtime name: "CodeChickenLib"      , group: "codechicken",         version: ccl_version,   classifier: "dev"
+    runtime name: "CodeChickenCore"     , group: "codechicken",         version: ccc_version,   classifier: "dev"
+    runtime name: "Waila"               , group: "mcp.mobius.waila",    version: waila_version
+    runtime name: "Waila"               , group: "mcp.mobius.waila",    version: waila_version
 }
 
 processResources {
