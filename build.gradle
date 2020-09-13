@@ -1,33 +1,57 @@
 /**
- * Repos and Deps of the Gradle buildscript are listed here.
- * This is better described lower down in the middle of the buildscript.
- **/
+ * MIT License
+ *
+ * Copyright 2020 basdxz
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+ * CONTRACT, TORT  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+//Repos and Deps of the Gradle buildscript are listed here.
 buildscript {
     /**
      * In general, mavenCentral has most of the plugins you will need for this. If you need additional plugins,
      * they will list what repository they come from or what dependencies they require.
      *
-     * Repositories are defined as for Maven:
+     * Repositories are defined as:
+     *
+     * For Maven:
      * maven {
      *      name = "name-of-repo"
      *      url = "path-to-repo"
      * }
      *
-     * And like this for Ivy:
+     * For Ivy:
      * ivy {
-     *      name "name-of-repo"
+     *      name = "name-of-repo"
      *      artifactPattern "path-to-repo/[module]-[revision].[ext]"
      * }
      *
      * Some real examples include:
+     *
+     * For Maven:
      * maven {
      *      name = "JitPack Maven"
      *      url = "https://jitpack.io"
      * }
      * Bonus Info: JitPack can build and provide dependencies straight from GitHub
      *
+     * For Ivy:
      * ivy {
-     *      name 'GTNH Ivy'
+     *      name = 'GTNH Ivy'
      *      artifactPattern "https://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
      * }
      *
@@ -118,27 +142,55 @@ configurations {
 /**
  * Gradle supports Maven and Ivy repositories to download dependencies. You can find more repositories online or from
  * build.gradle's of other mod's repositories. A good source is looking at sources over from open source CurseForge mods.
- * A good number of useful repos are included but commented out, with the exception of the GregTech maven for NEI and Waila
+ * A good number of useful repos are included but commented out, the ones present are used for loading the included
+ * runtime libraries.
  *
- * TODO Provide examples and streamline and talk about CurseForge plugin
+ * Dependencies loaded during the buildscript phase carry over to here, so there is no need to include them twice.
+ * E.G. Maven Central.
+ *
+ * Repositories are defined as:
+ *
+ * For Maven:
+ * maven {*      name = "name-of-repo"
+ *      url = "path-to-repo"
+ * }
+ *
+ * For Ivy:
+ * ivy {
+ *      name = "name-of-repo"
+ *      artifactPattern "path-to-repo/[module]-[revision].[ext]"
+ * }
+ *
+ * Some real examples include:
+ *
+ * For Maven:
+ * maven {
+ *     name = "UsrvDE Maven"
+ *     url = "https://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
+ * }
+ *
+ * For Ivy:
+ * ivy {
+ *      name = 'GTNH Ivy'
+ *      artifactPattern "https://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
+ * }
  */
 repositories {
-    //TODO mention mavencentral is default
     maven {
         name = "GregTech Maven"
         url = "https://gregtech.overminddl1.com/"
     }
     maven {
-        name "OpenComputers Maven"
-        url "https://maven.cil.li/"
+        name =  "OpenComputers Maven"
+        url = "https://maven.cil.li/"
     }
     maven {
-        name 'Curse Maven'
+        name = "Curse Maven"
         url = "https://www.cursemaven.com"
     }
     //maven {
-    //    name 'UsrvDE Maven'
-    //    url "https://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
+    //    name = "UsrvDE Maven"
+    //    url = "https://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
     //}
     //maven {
     //    name = "IC2 Maven"
@@ -149,53 +201,67 @@ repositories {
     //    url 'https://maven.mcmoddev.com/'
     //}
     //maven {
-    //    name "Tterrag Maven"
-    //    url "https://maven.tterrag.com/"
+    //    name = "Tterrag Maven"
+    //    url = "https://maven.tterrag.com/"
     //}
     //ivy {
-    //    name 'GTNH Ivy'
+    //    name = "GTNH Ivy"
     //    artifactPattern "https://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
     //}
 }
 
 /**
- * TODO Rewrite Gradle and Ivy paths to make more sense and talk about CurseForge plugin
- *
- * You may put jars on which you depend on in ./libs to build and use during runClient
- * You will have to manually right click these and select 'Add Library'
+ * Dependencies can be loaded from ./libs to build and use during runClient
+ * You will have to manually right click these and select 'Add Library' in Intellij
  * Additionally, on first reference these will need to be added to your classpath which Intellij will tell you about.
  *
  * If you wish to use Maven or Ivy repositories, you may define dependencies as shown:
  *
  * For Maven:
- * runtime name: "NotEnoughItems",     group: "codechicken",       version: nei_version,       classifier: "dev"
- * compile "some.group:artifact:version"
+ * dep-conf name: "dep-name", group: "dep.group.here", version: dep_version, classifier: "dev"
+ * dep-conf name: "dep-name", group: "dep.group.here", version: dep_version
  *
  * For Ivy:
- * compile name: 'name', version: 'version', ext: 'jar'
+ * compile name: 'dep-name', version: 'dep-version', ext: 'dep-ext'
  *
  * Some real world examples include:
  *
  * For Maven:
- * compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev environment
- * compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev environment
+ * compile name: "buildcraft", group: "com.mod-buildcraft", version: 6.0.8, classifier: "dev"
+ * runtime name: "Waila", group: "mcp.mobius.waila", version: 1.5.10_1.7.10
  *
  * For Ivy:
  * compile name: 'CoFHCore', version: '[1.7.10]3.1.4-329-dev', ext: 'jar'
  *
- * For more information on gradle 4.4.1 visit:
+ * For more information on Gradle 4.4.1 visit:
  * https://docs.gradle.org/4.4.1/userguide/java_plugin.html
  * https://docs.gradle.org/4.4.1/userguide/dependency_management.html
  *
- * You may also use compileOnly in place of compile, this lets you build against a library but does not include
- * it when runClient or similar are used. Finally, if you wish to test against a different library than that which
- * you build against, add them to the: ./run/mods/ directory (created on first start) to be loaded on runClient.
+ * The most useful dep configs are:
+ * compile      - dep is present during build and runClient
+ * compileOnly  - dep is only present during build not but runClient
+ * runtime      - dep is only present during runClient
+ *
+ * A special one being shadow, which is disabled by default in this config but can be easily uncomented.
+ * shadow       - dep is intended to be partially or fully built into the built mod, often combined with compileOnly
  *
  * Additional information: The suffix dev or deobf tends to imply that the comments and variable names have been kept
- * intact. By default, you will have NEI and Waila preloaded.
+ * intact. By default, you will have NEI, Waila and Inventory Tweaks present in the environment.
  *
- * https://www.cursemaven.com/
+ * If a development version of the dependency is not required, it is almost always present on the CurseForge Maven.
+ *
+ * For more information about the CurseForge Maven visit:
+ * https://authors.curseforge.com/knowledge-base/projects/529-api
+ *
+ * This config implements the CurseMaven helper plugin from: https://www.cursemaven.com/
+ *
+ * As an example, Inventory Tweaks is loaded using CurseMaven.
  * https://www.curseforge.com/minecraft/mc-mods/inventory-tweaks/files/2210792
+ *
+ * CurseMaven is present in the repositories under Curse Maven. Then under dependencies the mod is loaded as:
+ * runtime name: "inventory-tweaks", group: "curse.maven", version: 2210792
+ *
+ * Which adds the 1.59-dev-152 version of Inventory Tweaks to be added to runClient only at runtime.
  *
  */
 dependencies {
@@ -308,7 +374,7 @@ processResources {
                 'authorList':   project.modauthors
     }
 
-    //Copy everything else, thats not the mcmod.info
+    //Copy everything else, that's not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
