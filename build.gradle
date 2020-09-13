@@ -1,33 +1,81 @@
+/**
+ * Repos and Deps of the Gradle buildscript are listed here.
+ * This is better described lower down in the middle of the buildscript.
+ **/
 buildscript {
+    /**
+     * In general, mavenCentral has most of the plugins you will need for this. If you need additional plugins,
+     * they will list what repository they come from or what dependencies they require.
+     *
+     * Repositories are defined as for Maven:
+     * maven {
+     *      name = "name-of-repo"
+     *      url = "path-to-repo"
+     * }
+     *
+     * And like this for Ivy:
+     * ivy {
+     *      name "name-of-repo"
+     *      artifactPattern "path-to-repo/[module]-[revision].[ext]"
+     * }
+     *
+     * Some real examples include:
+     * maven {
+     *      name = "JitPack Maven"
+     *      url = "https://jitpack.io"
+     * }
+     * Bonus Info: JitPack can build and provide dependencies straight from GitHub
+     *
+     * ivy {
+     *      name 'GTNH Ivy'
+     *      artifactPattern "https://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
+     * }
+     *
+     * There are also mavenCentral() and jcenter(), which are Maven repositories built into the Gradle wrapper.
+     */
     repositories {
         mavenCentral()
-        jcenter()
+        //Uncomment to use Shadow
+        //jcenter()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = "Forge Maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {
-            name = "sonatype"
+            name = "Sonatype Maven"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
+    /**
+     * The classpath dependency configuration is used for dependencies needed for the buildscript to run.
+     *
+     * The dependency format is generally:
+     * dep-conf name: "name-of-dep", group: "name-of-repo", version: "version-of-repo"
+     *
+     * An example would be:
+     * classpath name: "shadow", group: "com.github.jengelman.gradle.plugins", version: "1.2.3"
+     */
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath name: "ForgeGradle",    group: "net.minecraftforge.gradle",             version: "1.2-SNAPSHOT"
+        //Uncomment to use Shadow
+        //classpath name: "shadow",         group: "com.github.jengelman.gradle.plugins",   version: "1.2.3"
     }
 }
-apply plugin: 'forge'
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
 
-//Assumes this and all related projects are JDK 8 based
+//Buildscript plugins are listed here
+apply plugin: 'forge'
+//Uncomment to use Shadow
+//apply plugin: 'com.github.johnrengelman.shadow'
+
+//Assumes this and all related projects are JDK 8 based.
+//Essential so tasks generate correctly.
 allprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 }
 
-//This adds a git commit dependent appendage to the file name
+//Adds a git commit dependent appendage to the file name
 //Helps to differentiate artefacts if you don't up the version.
 static def getVersionAppendage() {
     def proc = "git rev-parse --short HEAD".execute()
@@ -35,27 +83,31 @@ static def getVersionAppendage() {
     return "DEV." + proc.exitValue() ? proc.text.trim() : "GITBORK"
 }
 
-//Loads configs from build.properties
-ext.modid = "${project_modid}"
-ext.modname = "${project_name}"
-ext.modversion = "${project_version}"
-//Should follow: http://maven.apache.org/guides/mini/guide-naming-conventions.html
+//Loads configs from gradle.properties
+ext {
+    modid       =   "${project_modid}"
+    modname     =   "${project_name}"
+    modversion  =   "${project_version}"
+    modgithead  =   getVersionAppendage()
+    modauthors  =   "${project_authors}"
+}
+//Should follow: https://maven.apache.org/guides/mini/guide-naming-conventions.html
 group = "${project_group}"
 //Follows modid by default, name of the *.jar
 archivesBaseName = "${project_modid}"
 //Appended to the end of the *.jar after archivesBaseName
-version = "1.7.10-" + modversion + "-" + getVersionAppendage()
+version = "1.7.10-" + modversion + "-" + modgithead
 
 minecraft {
     //Version of Forge Mod Loader to use
     version = "1.7.10-10.13.4.1614-1.7.10"
-    //Directory where runClient or runServer executes from
+    //Directory where runClient or runServer executes from, sometimes set as eclipse
     runDir = "run"
-    //
-    replaceIn "src/main/java/com/github/basdxz/examplemod/Reference.java"
-    replace "@MODID@", modid
-    replace "@NAME@", modname
-    replace "@VERSION@", "${project_version}"
+    //Replaces values in the Reference.java at compile time
+    replaceIn "${project_reference}"
+    replace "@MODID@",      modid
+    replace "@NAME@",       modname
+    replace "@VERSION@",    modversion
 }
 
 //Extends the shadow dependency configuration with compileOnly
@@ -71,33 +123,34 @@ configurations {
  * TODO Provide examples and streamline and talk about CurseForge plugin
  */
 repositories {
+    //TODO mention mavencentral is default
     maven {
-        name = "GregTech maven"
+        name = "GregTech Maven"
         url = "https://gregtech.overminddl1.com/"
     }
     maven {
-        name "OpenComputers maven"
-        url "http://maven.cil.li/"
+        name "OpenComputers Maven"
+        url "https://maven.cil.li/"
     }
     //maven {
-    //    name 'UsrvDE maven'
-    //    url "http://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
+    //    name 'UsrvDE Maven'
+    //    url "https://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
     //}
     //maven {
-    //    name = "IC2 maven"
-    //    url = "http://maven.ic2.player.to/"
+    //    name = "IC2 Maven"
+    //    url = "https://maven.ic2.player.to/"
     //}
     //maven {
-    //    name 'MC Mod Dev maven'
+    //    name 'MC Mod Dev Maven'
     //    url 'https://maven.mcmoddev.com/'
     //}
     //maven {
-    //    name "Tterrag maven"
+    //    name "Tterrag Maven"
     //    url "https://maven.tterrag.com/"
     //}
     //ivy {
-    //    name 'gtnh_download_source'
-    //    artifactPattern "http://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
+    //    name 'GTNH Ivy'
+    //    artifactPattern "https://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]"
     //}
 }
 
@@ -126,9 +179,9 @@ repositories {
  * For Ivy:
  * compile name: 'CoFHCore', version: '[1.7.10]3.1.4-329-dev', ext: 'jar'
  *
- * For more information visit:
- * http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
- * http://www.gradle.org/docs/current/userguide/dependency_management.html
+ * For more information on gradle 4.4.1 visit:
+ * https://docs.gradle.org/4.4.1/userguide/java_plugin.html
+ * https://docs.gradle.org/4.4.1/userguide/dependency_management.html
  *
  * You may also use compileOnly in place of compile, this lets you build against a library but does not include
  * it when runClient or similar are used. Finally, if you wish to test against a different library than that which
@@ -138,50 +191,115 @@ repositories {
  * intact. By default, you will have NEI and Waila preloaded.
  */
 dependencies {
-    runtime name: "NotEnoughItems"      , group: "codechicken",         version: nei_version,       classifier: "dev"
-    runtime name: "CodeChickenLib"      , group: "codechicken",         version: ccl_version,       classifier: "dev"
-    runtime name: "CodeChickenCore"     , group: "codechicken",         version: ccc_version,       classifier: "dev"
-    runtime name: "Waila"               , group: "mcp.mobius.waila",    version: waila_version
-    shadow  name: "reactor-core"        , group: "io.projectreactor",   version: reactor_version
+    runtime name: "NotEnoughItems",     group: "codechicken",       version: nei_version,       classifier: "dev"
+    runtime name: "CodeChickenLib",     group: "codechicken",       version: ccl_version,       classifier: "dev"
+    runtime name: "CodeChickenCore",    group: "codechicken",       version: ccc_version,       classifier: "dev"
+    runtime name: "Waila",              group: "mcp.mobius.waila",  version: waila_version
+    //Uncomment as part of shadow example
+    //shadow  name: "reactor-core",       group: "io.projectreactor", version: reactor_version
 }
 
 /**
- * TODO Document how this works
+ * The Shadow plugin allows for the inclusion of external libraries into your own *.jar
+ *
+ * The relocate method is called for copying packages from libraries into the final jar.
+ *
+ * As an example:
+ * relocate "package-group",                 "project-group.shadowlibs.package-group"
+ *
+ * And as a real world example:
+ * relocate "reactor",                 "com.github.basdxz.examplemod.shadowlibs.reactor"
+ *
+ * Some libraries might include more than one group, this will require multiple relocate methods.
+ * While you can relocate right into the matching group as before, this should be avoided.
+ * As if another mod has matching package names due to, as an example, shadowing the same libraries.
+ * You will experience incompatibilities.
  */
-shadowJar {
-    archiveName = tasks.jar.archiveName
-    configurations = [project.configurations.shadow]
-    relocate 'reactor', 'com.github.basdxz.examplemod.shadowlibs.reactor'
-    relocate 'org.reactivestreams', 'com.github.basdxz.examplemod.shadowlibs.org.reactivestreams'
-}
+//Uncomment to use Shadow
+//shadowJar {
+//    //Matches the shadow jar with the normal jar, vital for reobf.
+//    //Or this task adds -all to the jar file, which again breaks reobf.
+//    archiveName = tasks.jar.archiveName
+//    //Set the configurations, to exclude all the other compile time libraries.
+//    configurations = [project.configurations.shadow]
+//    //Uncomment as part of shadow example
+//    //relocate "reactor",                 "${project_group}.shadowlibs.reactor"
+//    //relocate "org.reactivestreams",     "${project_group}.shadowlibs.org.reactivestreams"
+//}
 
+/**
+ * Expands the jar task to put more info into the META-INF/MANIFEST.MF inside the final *.jar
+ * The manifest follows Oracle spec from: https://docs.oracle.com/javase/tutorial/deployment/jar/packageman.html
+ * "Specification-Title": Java Utility Classes
+ * "Specification-Version": 1.2
+ * "Specification-Vendor": Example Tech, Inc.
+ * "Implementation-Title": java.util
+ * "Implementation-Version": build57
+ * "Implementation-Vendor": Example Tech, Inc.
+ *
+ * Breaking it down:
+ * Specification-Title is the the full name of your Mod
+ * Specification-Version is the feature/bugfix version
+ * Specification-Vendor is the mod author('s)
+ * Implementation-Title is the mod package group
+ * Implementation-Version is the build or git HEAD
+ * Implementation-Vendor is again, the mod author('s)
+ *
+ * As a complete example of the final manifest:
+ * "Specification-Title": Example Mod
+ * "Specification-Version": 1.2.5
+ * "Specification-Vendor": basdxz
+ * "Implementation-Title": com.github.basdxz.examplemod
+ * "Implementation-Version": e42935f
+ * "Implementation-Vendor": basdxz
+ *
+ * Additionally, a timestamp is included by default:
+ * "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+ *
+ * This includes the build date as yyyy-MM-dd'T'HH:mm:ssZ
+ *
+ * Finally, the jar task is configured to depend on the shadowJar.
+ */
 jar {
-    configurations.shadow.each { dep ->
-        from(project.zipTree(dep)){
-            exclude 'META-INF', 'META-INF/**'
-        }
+    manifest {
+        attributes(
+                [
+                        "Specification-Title"     : modname,
+                        "Specification-Version"   : modversion,
+                        "Specification-Vendor"    : modauthors,
+                        "Implementation-Title"    : modname,
+                        "Implementation-Version"  : modgithead,
+                        "Implementation-Vendor"   : modauthors,
+                        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                ]
+        )
     }
+    //Uncomment to use Shadow
+    //dependsOn shadowJar
+    ////Stops the jar task overriding the shadowJar
+    //enabled = false
 }
 
-jar.dependsOn shadowJar
-jar.enabled = false
-
-//TODO Explain why this is even needed, considering the minecraft replaces
+//Replaces values inside mcmod.info during build time.
 processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property 'modid', project.modid
-    inputs.property 'name', project.modname
-    inputs.property 'version', project.modversion
+    //List of properties that will trigger this task to rerun when changed.
+    inputs.property 'modid',        project.modid
+    inputs.property 'name',         project.modname
+    inputs.property 'version',      project.modversion
+    inputs.property 'authorList',   project.modauthors
 
-    // replace stuff in mcmod.info, nothing else
+    //Replaces values only in mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 
-        // replace version
-        expand 'modid': project.modid, 'name': project.modname, 'version': project.modversion
+        //Replace the properties, must include every
+        expand  'modid':        project.modid,
+                'name':         project.modname,
+                'version':      project.modversion,
+                'authorList':   project.modauthors
     }
 
-    // copy everything else, thats not the mcmod.info
+    //Copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }

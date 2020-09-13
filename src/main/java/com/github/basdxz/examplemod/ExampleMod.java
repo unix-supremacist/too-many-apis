@@ -4,8 +4,8 @@ import net.minecraft.init.Blocks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-
-import reactor.core.publisher.Flux;
+//Uncomment as part of shadow example
+//import reactor.core.publisher.Flux;
 
 import static com.github.basdxz.examplemod.Reference.*;
 
@@ -13,8 +13,11 @@ import static com.github.basdxz.examplemod.Reference.*;
 public class ExampleMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        // some example code
-        String e = Flux.class.getSimpleName();
-        System.out.println("DIRT BLOCK >> " + Blocks.dirt.getUnlocalizedName() + " WOAG " + e);
+        //Uncomment as part of shadow example
+        //String e = Flux.class.getSimpleName();
+        //System.out.println("DIRT BLOCK, WoaG and Flux! >> " + Blocks.dirt.getUnlocalizedName() + " WOAG " + e);
+
+        //Some example code
+        System.out.println("DIRT BLOCK >> " + Blocks.dirt.getUnlocalizedName());
     }
 }
