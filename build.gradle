@@ -88,6 +88,7 @@ buildscript {
 
 //Buildscript plugins are listed here
 apply plugin: 'forge'
+apply plugin: 'idea'
 //Uncomment to use Shadow
 //apply plugin: 'com.github.johnrengelman.shadow'
 
@@ -97,6 +98,14 @@ allprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+}
+
+//Tells Intellij to download the Javadoc and Sources for any loaded dependencies from their repos if available.
+idea{
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
 //Adds a git commit dependent appendage to the file name
@@ -114,6 +123,9 @@ ext {
     modversion  =   "${project_version}"
     modgithead  =   getVersionAppendage()
     modauthors  =   "${project_authors}"
+    modurl      =   "${project_url}"
+    modupdateurl=   "${project_update_url}"
+    modcredits  =   "${project_credits}"
 }
 //Should follow: https://maven.apache.org/guides/mini/guide-naming-conventions.html
 group = "${project_group}"
@@ -151,7 +163,8 @@ configurations {
  * Repositories are defined as:
  *
  * For Maven:
- * maven {*      name = "name-of-repo"
+ * maven {
+ *      name = "name-of-repo"
  *      url = "path-to-repo"
  * }
  *
@@ -274,6 +287,24 @@ dependencies {
     //shadow  name: "reactor-core",       group: "io.projectreactor", version: reactor_version
 }
 
+//Creates deobfuscated jar
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+//Creates source code jar
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+//Expands artifacts
+artifacts {
+    archives deobfJar
+    archives sourceJar
+}
+
 /**
  * The Shadow plugin allows for the inclusion of external libraries into your own *.jar
  *
@@ -362,6 +393,9 @@ processResources {
     inputs.property 'name',         project.modname
     inputs.property 'version',      project.modversion
     inputs.property 'authorList',   project.modauthors
+    inputs.property 'url',          project.modurl
+    inputs.property 'updateUrl',    project.modupdateurl
+    inputs.property 'credits',      project.modcredits
 
     //Replaces values only in mcmod.info
     from(sourceSets.main.resources.srcDirs) {
@@ -371,7 +405,10 @@ processResources {
         expand  'modid':        project.modid,
                 'name':         project.modname,
                 'version':      project.modversion,
-                'authorList':   project.modauthors
+                'authorList':   project.modauthors,
+                'url':          project.modurl,
+                'updateUrl':    project.modupdateurl,
+                'credits':      project.modcredits
     }
 
     //Copy everything else, that's not the mcmod.info
