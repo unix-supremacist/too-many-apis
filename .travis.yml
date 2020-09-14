@@ -25,7 +25,7 @@ jobs:
     skip_cleanup: true
     file_glob: true
     on:
-      branches: 1.7.10
+      branch: 1.7.10
 #after_success:
 #  - wget https://raw.githubusercontent.com/bartimaeusnek/travis-ci-discord-webhook/master/send.sh
 #  - chmod +x send.sh
