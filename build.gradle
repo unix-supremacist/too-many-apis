@@ -18,6 +18,10 @@
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
  * CONTRACT, TORT  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * TODO: Tutorial on how to install JDK8 and setup Intellij for PC, Linux and Mac
+ * TODO: Expand example to a multi-project build
+ * TODO: Explain how to setup Travis CI
  */
 
 //Repos and Deps of the Gradle buildscript are listed here.
