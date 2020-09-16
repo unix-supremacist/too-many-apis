@@ -73,6 +73,10 @@ buildscript {
             name = "Sonatype Maven"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = "JitPack Maven"
+            url = "https://jitpack.io"
+        }
     }
     /**
      * The classpath dependency configuration is used for dependencies needed for the buildscript to run.
@@ -84,9 +88,11 @@ buildscript {
      * classpath name: "shadow", group: "com.github.jengelman.gradle.plugins", version: "1.2.3"
      */
     dependencies {
-        classpath name: "ForgeGradle",    group: "net.minecraftforge.gradle",             version: "1.2-SNAPSHOT"
+        classpath name: "ForgeGradle",    group: "com.github.CDAGaming",                version: "1c670759c5"
+        //Original ForgeGradle plugin, requires downgrade to Gradle 4.4.1
+        //classpath name: "ForgeGradle",    group: "net.minecraftforge.gradle",           version: "1.2-SNAPSHOT"
         //Uncomment to use Shadow
-        //classpath name: "shadow",         group: "com.github.jengelman.gradle.plugins",   version: "1.2.3"
+        //classpath name: "shadow",         group: "com.github.jengelman.gradle.plugins", version: "1.2.3"
     }
 }
 
@@ -251,8 +257,8 @@ repositories {
  * compile name: 'CoFHCore', version: '[1.7.10]3.1.4-329-dev', ext: 'jar'
  *
  * For more information on Gradle 4.4.1 visit:
- * https://docs.gradle.org/4.4.1/userguide/java_plugin.html
- * https://docs.gradle.org/4.4.1/userguide/dependency_management.html
+ * https://docs.gradle.org/5.6.4/userguide/java_plugin.html
+ * https://docs.gradle.org/current/userguide/dependency_management.html
  *
  * The most useful dep configs are:
  * compile      - dep is present during build and runClient
