@@ -1,3 +1,9 @@
 .gradle/
 .idea/
 run/
+src/main/resources/*
+.project
+.settings/*
+.classpath
+eclipse/*
+bin/*
