@@ -7,7 +7,7 @@ import dbp.tma.api.material.MaterialRegister;
 public class MatReg implements MaterialRegistrationEvent {
 	public enum Materials {
 		copper(new Material().addPart("ingot").addPart("plate").addPart("test")),
-		iron(new Material().addPart("plate").addPart("ingot").addPart("dust")),
+		iron(new Material().addPart("plate").addPart("ingot").addPart("dust").setColor(0xFF0000)),
 		steel(new Material().addPart("plate"));
 		
 		public final Material material;

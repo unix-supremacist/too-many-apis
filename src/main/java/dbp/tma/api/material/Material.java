@@ -6,6 +6,7 @@ import dbp.tma.api.Main;
 
 public class Material {
 	int id;
+	int color = 0xFFFFFF;
 	String name;
 	String type;
 	boolean enabled = true;
@@ -40,11 +41,21 @@ public class Material {
 		return this;
 	}
 	
+	public Material setColor(int color) {
+		this.color = color;
+		return this;
+	}
+	
 	public HashMap getParts() {
 		return parts;
 	}
 	
 	public int getId() {
 		return id;
+	}
+	
+	
+	public int getColor() {
+		return color;
 	}
 }

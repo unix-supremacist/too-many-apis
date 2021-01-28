@@ -3,13 +3,14 @@ package dbp.tma.events;
 import dbp.tma.api.events.PartRegistrationEvent;
 import dbp.tma.api.material.MaterialRegister;
 import dbp.tma.api.material.Part;
+import dbp.tma.Reference;
 import net.minecraft.item.Item;
 
 public class PartReg implements PartRegistrationEvent {
 	public enum Parts {
-		ingot(new Part().setPartName("ingot")),
-		dust(new Part().setPartName("dust")),
-		plate(new Part().setPartName("plate"));
+		ingot(new Part(Reference.MODID).setPartName("ingot")),
+		dust(new Part(Reference.MODID).setPartName("dust")),
+		plate(new Part(Reference.MODID).setPartName("plate"));
 		
 		public final Part part;
 		Parts(Part part){

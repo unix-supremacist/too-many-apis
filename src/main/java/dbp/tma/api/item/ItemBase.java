@@ -17,8 +17,9 @@ public class ItemBase extends Item{
 	public IIcon[] icon = new IIcon[255];
 	String modid;
 	
-	public ItemBase() {
+	public ItemBase(String modid) {
 		setHasSubtypes(true);
+		this.modid = modid;
 	}
 	
 	@Override
@@ -33,10 +34,11 @@ public class ItemBase extends Item{
 		return "item."+items.get(item.getItemDamage())+name;
 	}
 	
+	//temporarily hardcode modid until shit is fixed
 	@Override
 	public void registerIcons(IIconRegister register){
 		for(Map.Entry<Integer, String> item : items.entrySet()){
-			icon[item.getKey()] = register.registerIcon(modid+":item_"+item.getValue());
+			icon[item.getKey()] = register.registerIcon("tma"+":item_"+item.getValue());
 		}
 	}
 	
