@@ -3,6 +3,7 @@ package dbp.tma.api.material;
 import dbp.tma.api.Main;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Material {
     int id;
@@ -11,7 +12,7 @@ public class Material {
     String type;
     String partSet = "default";
     boolean enabled = true;
-    HashMap<String, String> parts = new HashMap<String, String>();
+    HashSet<String> parts = new HashSet<String>();
     HashMap<String, String> settingsString = new HashMap<String, String>();
     HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
 
@@ -40,7 +41,7 @@ public class Material {
     }
 
     public Material addPart(String part) {
-        parts.put(part, part);
+        parts.add(part);
         return this;
     }
 
@@ -58,7 +59,7 @@ public class Material {
         return this;
     }
 
-    public HashMap getParts() {
+    public HashSet getParts() {
         return parts;
     }
 
