@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 public class MetaSeedBase extends SeedBase {
     public Block crop;
-    public final static HashMap<Integer, String> items = new HashMap<Integer, String>();
-    public final static HashMap<Integer, Block> crops = new HashMap<Integer, Block>();
+    public final static HashMap<Integer, String> items = new HashMap<>();
+    public final static HashMap<Integer, Block> crops = new HashMap<>();
 
     public MetaSeedBase(Block crop, Block farmland) {
         super(crop, farmland);

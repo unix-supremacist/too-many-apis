@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class MaterialRegister {
-    public static final HashMap<String, Part> parts = new HashMap<String, Part>();
-    public static final HashMap<String, Material> materials = new HashMap<String, Material>();
+    public static final HashMap<String, Part> parts = new HashMap<>();
+    public static final HashMap<String, Material> materials = new HashMap<>();
 
     public static void registerMaterial(Material material) {
         materials.put(material.getName(), material);

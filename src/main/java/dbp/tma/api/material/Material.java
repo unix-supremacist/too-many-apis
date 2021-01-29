@@ -12,9 +12,9 @@ public class Material {
     protected String type;
     protected String partSet = "default";
     protected boolean enabled = true;
-    protected final HashSet<String> parts = new HashSet<String>();
-    protected final HashMap<String, String> settingsString = new HashMap<String, String>();
-    protected final HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
+    protected final HashSet<String> parts = new HashSet<>();
+    protected final HashMap<String, String> settingsString = new HashMap<>();
+    protected final HashMap<String, Integer> settingsInt = new HashMap<>();
 
     public Material() {
         Main.lastMaterialId++;

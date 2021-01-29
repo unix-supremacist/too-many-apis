@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MetaFoodBase extends FoodBase {
-    public final HashMap<Integer, Integer> HealAmounts = new HashMap<Integer, Integer>();
-    public final HashMap<Integer, Float> SatAmounts = new HashMap<Integer, Float>();
-    static HashMap<Integer, String> items = new HashMap<Integer, String>();
+    public final HashMap<Integer, Integer> HealAmounts = new HashMap<>();
+    public final HashMap<Integer, Float> SatAmounts = new HashMap<>();
+    static HashMap<Integer, String> items = new HashMap<>();
     public IIcon[] icon = new IIcon[255];
     public String modid;
     public String name;
