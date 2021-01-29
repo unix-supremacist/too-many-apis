@@ -19,7 +19,7 @@ public class MaterialRegister {
         for (String matPart : material.parts) {
             if (parts.containsKey(matPart)) {
                 if (parts.get(matPart).isEnabled()) {
-                    if (matPart == parts.get(matPart).getPartName()) {
+                    if (matPart.equals(parts.get(matPart).getPartName())) {
                         parts.get(matPart)
                                 .setColor(material.getColor(), material.getId())
                                 .setSettingsString(material.getSettingsString(), material.getId())

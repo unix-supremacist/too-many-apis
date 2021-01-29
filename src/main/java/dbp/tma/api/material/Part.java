@@ -39,12 +39,12 @@ public class Part extends ItemBase {
         return this;
     }
 
-    public Part setSettingsInt(HashMap settings, int id) {
+    public Part setSettingsInt(HashMap<String, Integer> settings, int id) {
         settingsInt.put(id, settings);
         return this;
     }
 
-    public Part setSettingsString(HashMap settings, int id) {
+    public Part setSettingsString(HashMap<String, String> settings, int id) {
         settingsString.put(id, settings);
         return this;
     }
@@ -72,7 +72,6 @@ public class Part extends ItemBase {
         return enabled;
     }
 
-
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack itemStack, int u) {
@@ -91,7 +90,7 @@ public class Part extends ItemBase {
     }
 
     public Part addPartSet(String name, int matId) {
-        if (name != "default") {
+        if (!name.equals("default")) {
             if (!partSets.containsKey(name)) {
                 partSets.put(name, psid);
                 psid++;

@@ -14,7 +14,7 @@ public class Material {
     protected boolean enabled = true;
     protected final HashSet<String> parts = new HashSet<>();
     protected final HashMap<String, String> settingsString = new HashMap<>();
-    protected final HashMap<String, Integer> settingsInt = new HashMap<>();
+    protected final HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
 
     public Material() {
         Main.lastMaterialId++;
@@ -59,25 +59,25 @@ public class Material {
         return this;
     }
 
-    public HashSet getParts() {
-        return parts;
+    public HashSet<String> getParts() {
+        return this.parts;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
 
     public int getColor() {
-        return color;
+        return this.color;
     }
 
-    public HashMap getSettingsString() {
-        return settingsString;
+    public HashMap<String, String> getSettingsString() {
+        return this.settingsString;
     }
 
-    public HashMap getSettingsInt() {
-        return settingsInt;
+    public HashMap<String, Integer> getSettingsInt() {
+        return this.settingsInt;
     }
 
     public Material setSetting(String name, String setting) {
