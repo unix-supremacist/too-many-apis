@@ -24,8 +24,8 @@ public class MaterialRegister {
 						parts.get(matPart.getValue())
 						.setColor(material.getColor(), material.getId())
 						.setSettingsString(material.getSettingsString(), material.getId())
+						.addPartSet(material.getPartSet(), material.getId())
 						.addItem(material.getName(), material.getId());
-						
 					}
 				}
 			}

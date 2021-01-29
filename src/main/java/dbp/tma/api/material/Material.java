@@ -9,6 +9,7 @@ public class Material {
 	int color = 0xFFFFFF;
 	String name;
 	String type;
+	String partSet = "default";
 	boolean enabled = true;
 	HashMap<String, String> parts = new HashMap<String, String>();
 	HashMap<String, String> settingsString = new HashMap<String, String>();
@@ -41,6 +42,15 @@ public class Material {
 	public Material addPart(String part) {
 		parts.put(part, part);
 		return this;
+	}
+	
+	public Material setPartSet(String partSet) {
+		this.partSet = partSet;
+		return this;
+	}
+	
+	public String getPartSet() {
+		return partSet;
 	}
 	
 	public Material setColor(int color) {

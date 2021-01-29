@@ -8,7 +8,7 @@ public class MatReg implements MaterialRegistrationEvent {
 	public enum Materials {
 		copper(new Material().addPart("ingot").addPart("plate").addPart("test")),
 		iron(new Material().addPart("plate").addPart("ingot").addPart("dust").setColor(0xFF0000)),
-		steel(new Material().addPart("plate"));
+		steel(new Material().addPart("plate").setPartSet("shiny"));
 		
 		public final Material material;
 		Materials(Material material){
