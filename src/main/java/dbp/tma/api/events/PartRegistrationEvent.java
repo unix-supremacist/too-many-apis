@@ -1,3 +1,4 @@
 package dbp.tma.api.events;
 
-public interface PartRegistrationEvent extends BasicEvent{}
+public interface PartRegistrationEvent extends BasicEvent {
+}

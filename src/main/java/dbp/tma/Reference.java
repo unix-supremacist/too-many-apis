@@ -7,5 +7,6 @@ public final class Reference {
     public static final String NAME = "@NAME@";
     public static final String VERSION = "@VERSION@";
 
-    private Reference() {}
+    private Reference() {
+    }
 }

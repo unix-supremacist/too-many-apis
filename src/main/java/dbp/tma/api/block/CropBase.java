@@ -12,106 +12,106 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CropBase extends BlockCrops{
-	private Item item;
-	private Item seed;
-	private int itemMeta;
-	private int seedMeta;
-	private String modid = "rematerialized";
-	private String name;
-	private int iconLength = 4;
-	
-	@SideOnly(Side.CLIENT)
-	private IIcon[] cropTexture;
-	
+public class CropBase extends BlockCrops {
+    private Item item;
+    private Item seed;
+    private int itemMeta;
+    private int seedMeta;
+    private String modid = "rematerialized";
+    private String name;
+    private int iconLength = 4;
+
+    @SideOnly(Side.CLIENT)
+    private IIcon[] cropTexture;
+
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int unused, int growth){
-        if (growth > 2){
-            return this.cropTexture[growth-2];
+    public IIcon getIcon(int unused, int growth) {
+        if (growth > 2) {
+            return this.cropTexture[growth - 2];
         }
         return this.cropTexture[0];
     }
-    
-    protected ItemStack seedDrop(){
+
+    protected ItemStack seedDrop() {
         return new ItemStack(seed, 1, seedMeta);
     }
 
-    protected ItemStack itemDrop(){
+    protected ItemStack itemDrop() {
         return new ItemStack(item, 1, itemMeta);
     }
-    
-    protected Item func_149866_i(){
+
+    protected Item func_149866_i() {
         return seed;
     }
 
-    protected Item func_149865_P(){
+    protected Item func_149865_P() {
         return item;
     }
-    
+
     public CropBase setItem(Item item) {
-    	this.item = item;
-    	return this;
+        this.item = item;
+        return this;
     }
-    
+
     public CropBase setSeed(Item seed) {
-    	this.seed = seed;
-    	return this;
+        this.seed = seed;
+        return this;
     }
-    
+
     public CropBase setItemMeta(int itemMeta) {
-    	this.itemMeta = itemMeta;
-    	return this;
+        this.itemMeta = itemMeta;
+        return this;
     }
-    
+
     public CropBase setSeedMeta(int seedMeta) {
-    	this.seedMeta = seedMeta;
-    	return this;
+        this.seedMeta = seedMeta;
+        return this;
     }
-    
+
     public CropBase setIconLength(int iconLength) {
-    	this.iconLength = iconLength;
-    	return this;
+        this.iconLength = iconLength;
+        return this;
     }
-    
-	public CropBase setName(String name) {
-		this.name = name;
-		return this;
-	}
-	
-	public CropBase setModid(String modid) {
-		this.modid = modid;
-		return this;
-	}
+
+    public CropBase setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public CropBase setModid(String modid) {
+        this.modid = modid;
+        return this;
+    }
 
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister icon){
+    public void registerBlockIcons(IIconRegister icon) {
         this.cropTexture = new IIcon[iconLength];
 
-        for (int i = 0; i < this.cropTexture.length; ++i){
-            this.cropTexture[i] = icon.registerIcon(modid+":crop_"+name+"_"+i);
+        for (int i = 0; i < this.cropTexture.length; ++i) {
+            this.cropTexture[i] = icon.registerIcon(modid + ":crop_" + name + "_" + i);
         }
     }
-    
-    public ItemStack getItemstackDropped(int meta, Random p_149650_2_, int p_149650_3_){
+
+    public ItemStack getItemstackDropped(int meta, Random p_149650_2_, int p_149650_3_) {
         return meta == 7 ? this.itemDrop() : this.seedDrop();
     }
-    
+
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune){
-    	ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         int count = quantityDropped(metadata, fortune, world.rand);
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             ItemStack item = getItemstackDropped(metadata, world.rand, fortune);
-            if (item != null){
+            if (item != null) {
                 ret.add(item);
             }
         }
-        
-        if (metadata >= 7){
-            for (int i = 0; i < 3 + fortune; ++i){
-                if (world.rand.nextInt(15) <= metadata){
+
+        if (metadata >= 7) {
+            for (int i = 0; i < 3 + fortune; ++i) {
+                if (world.rand.nextInt(15) <= metadata) {
                     ret.add(this.seedDrop());
                 }
             }

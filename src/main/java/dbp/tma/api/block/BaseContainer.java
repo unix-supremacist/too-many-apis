@@ -5,46 +5,46 @@ import net.minecraft.block.BlockChest;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BaseContainer extends BlockChest{
-	boolean isOpaque = true;
-	boolean isNormal = true;
-	int renderType = 0;
+public class BaseContainer extends BlockChest {
+    boolean isOpaque = true;
+    boolean isNormal = true;
+    int renderType = 0;
 
-	public BaseContainer(int trapped) {
-		super(trapped);
-	}
-	
-	//@Override
+    public BaseContainer(int trapped) {
+        super(trapped);
+    }
+
+    //@Override
     //public int getRenderType(){
     //    return renderType;
     //}
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int unknown) {
+    @Override
+    public TileEntity createNewTileEntity(World world, int unknown) {
         TileBase tile = new TileBase();
         return tile;
-	}
-	
-	//@Override
+    }
+
+    //@Override
     //public boolean isOpaqueCube(){
     //    return isOpaque;
     //}
-    
-	//@Override
+
+    //@Override
     //public boolean renderAsNormalBlock(){
     //    return isNormal;
     //}
-	
-	@Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block){
-        super.onNeighborBlockChange(world, x, y, z, block);
-        TileBase tile = (TileBase)world.getTileEntity(x, y, z);
 
-        if (tile != null){
-        	tile.updateContainingBlockInfo();
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+        super.onNeighborBlockChange(world, x, y, z, block);
+        TileBase tile = (TileBase) world.getTileEntity(x, y, z);
+
+        if (tile != null) {
+            tile.updateContainingBlockInfo();
         }
     }
-	
-	//@Override public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){}
+
+    //@Override public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){}
 
 }

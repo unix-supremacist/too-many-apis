@@ -1,3 +1,4 @@
 package dbp.tma.api.events;
 
-public interface MaterialModifcationEvent extends BasicEvent{}
+public interface MaterialModifcationEvent extends BasicEvent {
+}
