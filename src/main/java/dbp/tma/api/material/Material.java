@@ -14,20 +14,20 @@ public class Material {
     protected boolean enabled = true;
     protected final HashSet<String> parts = new HashSet<>();
     protected final HashMap<String, String> settingsString = new HashMap<>();
-    protected final HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
+    protected final HashMap<String, Integer> settingsInt = new HashMap<>();
 
     public Material() {
         Main.lastMaterialId++;
-        id = Main.lastMaterialId;
+        this.id = Main.lastMaterialId;
     }
 
     public Material setDisabled() {
-        enabled = false;
+        this.enabled = false;
         return this;
     }
 
     public Material setEnabled() {
-        enabled = true;
+        this.enabled = true;
         return this;
     }
 
@@ -41,7 +41,7 @@ public class Material {
     }
 
     public Material addPart(String part) {
-        parts.add(part);
+        this.parts.add(part);
         return this;
     }
 
@@ -81,12 +81,12 @@ public class Material {
     }
 
     public Material setSetting(String name, String setting) {
-        settingsString.put(name, setting);
+        this.settingsString.put(name, setting);
         return this;
     }
 
     public Material setSetting(String name, int setting) {
-        settingsInt.put(name, setting);
+        this.settingsInt.put(name, setting);
         return this;
     }
 }
