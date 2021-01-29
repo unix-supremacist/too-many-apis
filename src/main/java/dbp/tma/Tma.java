@@ -16,9 +16,7 @@ import dbp.tma.events.EventListens;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME)
-
-
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Tma {
     Block testCrop = new CropBase().setName("cotton").setIconLength(6).setBlockName("testCrop");
     Block testNigger = new CropBase().setName("nigger").setIconLength(6).setBlockName("testNigger");
