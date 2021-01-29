@@ -2,11 +2,7 @@ package dbp.tma.api.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BaseContainer extends BlockChest{

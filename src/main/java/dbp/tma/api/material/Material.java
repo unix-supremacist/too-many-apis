@@ -1,8 +1,8 @@
 package dbp.tma.api.material;
 
-import java.util.HashMap;
-
 import dbp.tma.api.Main;
+
+import java.util.HashMap;
 
 public class Material {
 	int id;

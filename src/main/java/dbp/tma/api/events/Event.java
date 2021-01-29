@@ -1,9 +1,9 @@
 package dbp.tma.api.events;
 
+import dbp.tma.api.material.MaterialRegister;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import dbp.tma.api.material.MaterialRegister;
 
 public class Event {
 	public static List<PartRegistrationEvent> PartRegistration = new ArrayList<PartRegistrationEvent>();

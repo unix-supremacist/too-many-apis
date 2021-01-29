@@ -1,20 +1,12 @@
 package dbp.tma.api.item;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.HashMap;
 
 public class MetaSeedBase extends SeedBase{
 	Block crop;

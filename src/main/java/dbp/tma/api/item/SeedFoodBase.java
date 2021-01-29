@@ -2,7 +2,6 @@ package dbp.tma.api.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 
 public class SeedFoodBase extends ItemSeedFood{

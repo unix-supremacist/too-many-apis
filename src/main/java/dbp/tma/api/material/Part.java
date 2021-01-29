@@ -1,15 +1,14 @@
 package dbp.tma.api.material;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dbp.tma.api.item.ItemBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Part extends ItemBase{
 	String partName;

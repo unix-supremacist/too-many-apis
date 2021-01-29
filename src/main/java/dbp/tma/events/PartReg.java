@@ -1,10 +1,9 @@
 package dbp.tma.events;
 
+import dbp.tma.Reference;
 import dbp.tma.api.events.PartRegistrationEvent;
 import dbp.tma.api.material.MaterialRegister;
 import dbp.tma.api.material.Part;
-import dbp.tma.Reference;
-import net.minecraft.item.Item;
 
 public class PartReg implements PartRegistrationEvent {
 	public enum Parts {
