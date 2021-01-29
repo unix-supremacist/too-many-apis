@@ -9,9 +9,9 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 
 public class MetaSeedBase extends SeedBase {
-    Block crop;
-    static HashMap<Integer, String> items = new HashMap<Integer, String>();
-    static HashMap<Integer, Block> crops = new HashMap<Integer, Block>();
+    public Block crop;
+    public final static HashMap<Integer, String> items = new HashMap<Integer, String>();
+    public final static HashMap<Integer, Block> crops = new HashMap<Integer, Block>();
 
     public MetaSeedBase(Block crop, Block farmland) {
         super(crop, farmland);

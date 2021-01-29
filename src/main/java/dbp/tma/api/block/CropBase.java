@@ -13,17 +13,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CropBase extends BlockCrops {
-    private Item item;
-    private Item seed;
-    private int itemMeta;
-    private int seedMeta;
-    private String modid = "rematerialized";
-    private String name;
-    private int iconLength = 4;
-
+    protected Item item;
+    protected Item seed;
+    protected int itemMeta;
+    protected int seedMeta;
+    protected String modid = "rematerialized";
+    protected String name;
+    protected int iconLength = 4;
     @SideOnly(Side.CLIENT)
-    private IIcon[] cropTexture;
-
+    protected  IIcon[] cropTexture;
 
     @SideOnly(Side.CLIENT)
     @Override

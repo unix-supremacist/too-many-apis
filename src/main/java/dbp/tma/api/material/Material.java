@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Material {
-    int id;
-    int color = 0xFFFFFF;
-    String name;
-    String type;
-    String partSet = "default";
-    boolean enabled = true;
-    HashSet<String> parts = new HashSet<String>();
-    HashMap<String, String> settingsString = new HashMap<String, String>();
-    HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
+    protected int id;
+    protected int color = 0xFFFFFF;
+    protected String name;
+    protected String type;
+    protected String partSet = "default";
+    protected boolean enabled = true;
+    protected final HashSet<String> parts = new HashSet<String>();
+    protected final HashMap<String, String> settingsString = new HashMap<String, String>();
+    protected final HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
 
     public Material() {
         Main.lastMaterialId++;

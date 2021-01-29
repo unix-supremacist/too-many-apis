@@ -6,10 +6,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 
 public class TileBase extends TileEntityChest {
-    private String name;
-    private String baseName;
-    private ItemStack[] contents = new ItemStack[256];
-    private int size = 27;
+    protected String name;
+    protected String baseName;
+    protected ItemStack[] contents = new ItemStack[256];
+    protected int size = 27;
 
     public TileBase setSize(int size) {
         this.size = size;

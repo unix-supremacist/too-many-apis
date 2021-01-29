@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemBase extends Item {
-    String name;
-    static HashMap<Integer, String> items = new HashMap<Integer, String>();
+    public String name;
+    public static final HashMap<Integer, String> items = new HashMap<Integer, String>();
     public IIcon[] icon = new IIcon[255];
-    String modid;
+    protected String modid;
 
     public ItemBase(String modid) {
         setHasSubtypes(true);

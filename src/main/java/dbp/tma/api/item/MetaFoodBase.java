@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 public class MetaFoodBase extends FoodBase {
-    HashMap<Integer, Integer> HealAmounts = new HashMap<Integer, Integer>();
-    HashMap<Integer, Float> SatAmounts = new HashMap<Integer, Float>();
+    public final HashMap<Integer, Integer> HealAmounts = new HashMap<Integer, Integer>();
+    public final HashMap<Integer, Float> SatAmounts = new HashMap<Integer, Float>();
     static HashMap<Integer, String> items = new HashMap<Integer, String>();
     public IIcon[] icon = new IIcon[255];
-    String modid;
-    String name;
+    public String modid;
+    public String name;
 
     public MetaFoodBase(boolean wolf) {
         super(0, wolf);

@@ -6,9 +6,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class BaseContainer extends BlockChest {
-    boolean isOpaque = true;
-    boolean isNormal = true;
-    int renderType = 0;
+    protected boolean isOpaque = true;
+    protected boolean isNormal = true;
+    protected int renderType = 0;
 
     public BaseContainer(int trapped) {
         super(trapped);

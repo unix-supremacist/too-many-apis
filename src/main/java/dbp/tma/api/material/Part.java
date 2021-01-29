@@ -11,14 +11,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class Part extends ItemBase {
-    String partName;
-    boolean enabled = true;
-    int psid = 1;
-    static HashMap<Integer, Integer> colors = new HashMap<Integer, Integer>();
-    static HashMap<String, Integer> partSets = new HashMap<String, Integer>();
-    static HashMap<Integer, String> matSet = new HashMap<Integer, String>();
-    static HashMap<Integer, HashMap> settingsInt = new HashMap<Integer, HashMap>();
-    static HashMap<Integer, HashMap<String, String>> settingsString = new HashMap<Integer, HashMap<String, String>>();
+    public String partName;
+    protected boolean enabled = true;
+    protected int psid = 1;
+    protected static final HashMap<Integer, Integer> colors = new HashMap<Integer, Integer>();
+    protected static final HashMap<String, Integer> partSets = new HashMap<String, Integer>();
+    protected static final HashMap<Integer, String> matSet = new HashMap<Integer, String>();
+    protected static final HashMap<Integer, HashMap> settingsInt = new HashMap<Integer, HashMap>();
+    protected static final HashMap<Integer, HashMap<String, String>> settingsString = new HashMap<Integer, HashMap<String, String>>();
 
     public Part(String modid) {
         super(modid);
