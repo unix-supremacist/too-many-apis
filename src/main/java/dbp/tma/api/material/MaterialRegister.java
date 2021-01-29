@@ -17,11 +17,11 @@ public class MaterialRegister {
 	
 	public static void registerMaterial(Material material){
 		materials.put(material.getName(), material);
-		for (Map.Entry<String, String> matPart : material.parts.entrySet()) {
-			if (parts.containsKey(matPart.getKey())) {
-				if (parts.get(matPart.getValue()).isEnabled()) {
-					if (matPart.getValue() == parts.get(matPart.getValue()).getPartName()) {
-						parts.get(matPart.getValue())
+		for (String matPart : material.parts) {
+			if (parts.containsKey(matPart)) {
+				if (parts.get(matPart).isEnabled()) {
+					if (matPart == parts.get(matPart).getPartName()) {
+						parts.get(matPart)
 						.setColor(material.getColor(), material.getId())
 						.setSettingsString(material.getSettingsString(), material.getId())
 						.addPartSet(material.getPartSet(), material.getId())
@@ -44,8 +44,8 @@ public class MaterialRegister {
 	
 	public static void registerOreDict() {
 		for (Map.Entry<String, Material> material : materials.entrySet()) {
-			for(Map.Entry<String, String> part : material.getValue().parts.entrySet()) {
-				OreDictionary.registerOre(part.getKey()+StringUtils.capitalize(material.getKey()), new ItemStack(parts.get(part.getKey()), 1, material.getValue().getId()));
+			for(String part : material.getValue().parts) {
+				OreDictionary.registerOre(part+StringUtils.capitalize(material.getKey()), new ItemStack(parts.get(part), 1, material.getValue().getId()));
 			}
 		}
 	}
