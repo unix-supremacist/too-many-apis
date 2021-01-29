@@ -14,6 +14,8 @@ public class Part extends ItemBase{
 	String partName;
 	boolean enabled = true;
 	static HashMap<Integer, Integer> colors = new HashMap<Integer, Integer>();
+	static HashMap<Integer, HashMap> settingsInt = new HashMap<Integer, HashMap>();
+	static HashMap<Integer, HashMap<String, String>> settingsString = new HashMap<Integer, HashMap<String, String>>();
 	
 	public Part(String modid) {
 		super(modid);
@@ -31,6 +33,16 @@ public class Part extends ItemBase{
 	
 	public Part setColor(int color, int id) {
 		colors.put(id, color);
+		return this;
+	}
+	
+	public Part setSettingsInt(HashMap settings, int id) {
+		settingsInt.put(id, settings);
+		return this;
+	}
+	
+	public Part setSettingsString(HashMap settings, int id) {
+		settingsString.put(id, settings);
 		return this;
 	}
 	
@@ -68,5 +80,4 @@ public class Part extends ItemBase{
 	public IIcon getIconFromDamage(int meta){
 		return icon[0];
 	}
-
 }

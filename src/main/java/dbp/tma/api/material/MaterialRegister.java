@@ -21,7 +21,11 @@ public class MaterialRegister {
 			if (parts.containsKey(matPart.getKey())) {
 				if (parts.get(matPart.getValue()).isEnabled()) {
 					if (matPart.getValue() == parts.get(matPart.getValue()).getPartName()) {
-						parts.get(matPart.getValue()).setColor(material.getColor(), material.getId()).addItem(material.getName(), material.getId());
+						parts.get(matPart.getValue())
+						.setColor(material.getColor(), material.getId())
+						.setSettingsString(material.getSettingsString(), material.getId())
+						.addItem(material.getName(), material.getId());
+						
 					}
 				}
 			}

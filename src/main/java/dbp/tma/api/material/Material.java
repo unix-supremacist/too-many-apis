@@ -11,6 +11,8 @@ public class Material {
 	String type;
 	boolean enabled = true;
 	HashMap<String, String> parts = new HashMap<String, String>();
+	HashMap<String, String> settingsString = new HashMap<String, String>();
+	HashMap<String, Integer> settingsInt = new HashMap<String, Integer>();
 	
 	public Material () {
 		Main.lastMaterialId++;
@@ -57,5 +59,23 @@ public class Material {
 	
 	public int getColor() {
 		return color;
+	}
+	
+	public HashMap getSettingsString() {
+		return settingsString;
+	}
+	
+	public HashMap getSettingsInt() {
+		return settingsInt;
+	}
+	
+	public Material setSetting(String name, String setting) {
+		settingsString.put(name, setting);
+		return this;
+	}
+	
+	public Material setSetting(String name, int setting) {
+		settingsInt.put(name, setting);
+		return this;
 	}
 }
