@@ -86,7 +86,6 @@ public class CropBase extends BlockCrops {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister icon) {
 		this.cropTexture = new IIcon[iconLength];
-
 		for (int i = 0; i < this.cropTexture.length; ++i) {
 			this.cropTexture[i] = icon.registerIcon(modid + ":crop_" + name + "_" + i);
 		}

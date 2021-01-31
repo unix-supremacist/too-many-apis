@@ -19,7 +19,6 @@ public class SeedBase extends ItemSeeds {
 
 	public boolean onItemUse(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int u, float u1, float u2, float u3, Block block) {
 		if (u != 1) {
-			return false;
 		} else if (player.canPlayerEdit(x, y, z, u, item) && player.canPlayerEdit(x, y + 1, z, u, item)) {
 			if (world.getBlock(x, y, z).canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && world.isAirBlock(x, y + 1, z)) {
 				world.setBlock(x, y + 1, z, block);

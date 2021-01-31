@@ -18,14 +18,12 @@ public class Register {
 		materials.put(material.getName(), material);
 		for (String matPart : material.parts) {
 			if (parts.containsKey(matPart)) {
-				if (parts.get(matPart).isEnabled()) {
-					if (matPart.equals(parts.get(matPart).getPartName())) {
-						parts.get(matPart)
-								.setColor(material.getColor(), material.getId())
-								.setSettingsString(material.getSettingsString(), material.getId())
-								.addPartSet(material.getPartSet(), material.getId())
-								.addItem(material.getName(), material.getId());
-					}
+				if (parts.get(matPart).isEnabled() && matPart.equals(parts.get(matPart).getPartName())) {
+					parts.get(matPart)
+						.setColor(material.getColor(), material.getId())
+						.setSettingsString(material.getSettingsString(), material.getId())
+						.addPartSet(material.getPartSet(), material.getId())
+						.addItem(material.getName(), material.getId());
 				}
 			}
 		}

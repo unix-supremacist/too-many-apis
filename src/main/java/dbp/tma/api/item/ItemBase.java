@@ -1,5 +1,6 @@
 package dbp.tma.api.item;
 
+import dbp.tma.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -33,11 +34,10 @@ public class ItemBase extends Item {
 		return "item." + items.get(item.getItemDamage()) + name;
 	}
 
-	//temporarily hardcode modid until shit is fixed
 	@Override
 	public void registerIcons(IIconRegister register) {
 		for (Map.Entry<Integer, String> item : items.entrySet()) {
-			icon[item.getKey()] = register.registerIcon("tma" + ":item_" + item.getValue());
+			icon[item.getKey()] = register.registerIcon(Reference.MODID + ":item_" + item.getValue());
 		}
 	}
 
@@ -55,7 +55,6 @@ public class ItemBase extends Item {
 		this.modid = modid;
 		return this;
 	}
-
 
 	public ItemBase addItem(String name, int id) {
 		items.put(id, name);
