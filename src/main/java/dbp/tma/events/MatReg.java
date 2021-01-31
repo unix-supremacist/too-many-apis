@@ -2,7 +2,7 @@ package dbp.tma.events;
 
 import dbp.tma.api.events.MaterialRegistrationEvent;
 import dbp.tma.api.material.Material;
-import dbp.tma.api.material.Register;
+import dbp.tma.api.material.Registery;
 
 public class MatReg implements MaterialRegistrationEvent {
 	public enum Materials {
@@ -21,9 +21,9 @@ public class MatReg implements MaterialRegistrationEvent {
 	@Override
 	public void event() {
 		for (Materials material : Materials.values()) {
-			Register.registerMaterial(material.material);
+			Registery.registerMaterial(material.material);
 		}
-		
+
 		/*for (Integer i = 0; i < 20000; i++) {
 			Material test = new Material();
 			for (Integer i2 = 0; i2 < 15; i2++) {
