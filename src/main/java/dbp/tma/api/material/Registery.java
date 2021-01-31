@@ -18,7 +18,6 @@ public class Registery {
 		for (String matPart : material.parts) {
 			if (parts.containsKey(matPart)) {
 				if (parts.get(matPart).isEnabled() && matPart.equals(parts.get(matPart).getName())) {
-					System.out.println(matPart+material.getName());
 					parts.get(matPart)
 						.setColor(material.getColor())
 						.setSettingsString(material.getSettingsString(), material.getName())
