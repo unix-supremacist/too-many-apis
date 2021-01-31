@@ -11,7 +11,7 @@ import dbp.tma.api.block.TileBase;
 import dbp.tma.api.events.Event;
 import dbp.tma.api.item.MetaFoodBase;
 import dbp.tma.api.item.MetaSeedBase;
-import dbp.tma.api.material.Register;
+import dbp.tma.api.material.Registery;
 import dbp.tma.events.EventListens;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -39,6 +39,6 @@ public class Tma {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		Register.registerOreDict();
+		Registery.registerOreDict();
 	}
 }

@@ -1,6 +1,6 @@
 package dbp.tma.api.events;
 
-import dbp.tma.api.material.Register;
+import dbp.tma.api.material.Registery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Event {
 		for (PartModifcationEvent PartMod : PartModifcation) PartMod.event();
 		for (MaterialRegistrationEvent MatReg : MaterialRegistration) MatReg.event();
 		for (MaterialModifcationEvent MatMod : MaterialModifcation) MatMod.event();
-		Register.registerItems();
+		Registery.registerItems();
 	}
 
 }

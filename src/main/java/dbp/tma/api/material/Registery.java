@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class Register {
+public class Registery {
 	public static final HashMap<String, Part> parts = new HashMap<>();
 	public static final HashMap<String, Material> materials = new HashMap<>();
 
