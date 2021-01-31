@@ -2,7 +2,7 @@ package dbp.tma.events;
 
 import dbp.tma.Reference;
 import dbp.tma.api.events.PartRegistrationEvent;
-import dbp.tma.api.material.Register;
+import dbp.tma.api.material.Registery;
 import dbp.tma.api.material.Part;
 
 public class PartReg implements PartRegistrationEvent {
@@ -22,9 +22,9 @@ public class PartReg implements PartRegistrationEvent {
 	@Override
 	public void event() {
 		for (Parts part : Parts.values()) {
-			Register.registerPart(part.part);
+			Registery.registerPart(part.part);
 		}
-		
+
 		/*for (Integer i = 0; i < 15; i++) {
 			MaterialRegister.registerPart(new Part().setPartName(i.toString()));
 		}*/
