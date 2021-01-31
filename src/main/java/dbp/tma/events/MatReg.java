@@ -2,27 +2,27 @@ package dbp.tma.events;
 
 import dbp.tma.api.events.MaterialRegistrationEvent;
 import dbp.tma.api.material.Material;
-import dbp.tma.api.material.MaterialRegister;
+import dbp.tma.api.material.Register;
 
 public class MatReg implements MaterialRegistrationEvent {
-    public enum Materials {
-        copper(new Material().addPart("ingot").addPart("plate").addPart("test")),
-        iron(new Material().addPart("plate").addPart("ingot").addPart("dust").setColor(0xFF0000)),
-        steel(new Material().addPart("plate").setPartSet("shiny"));
+	public enum Materials {
+		copper(new Material().addPart("ingot").addPart("plate").addPart("test").setColor(0xFF6400)),
+		iron(new Material().addPart("plate").addPart("ingot").addPart("dust").setColor(0x7F7F7F)),
+		steel(new Material().addPart("plate").setPartSet("shiny").setColor(0xFF64FF));
 
-        public final Material material;
+		public final Material material;
 
-        Materials(Material material) {
-            this.material = material;
-            this.material.setName(this.toString());
-        }
-    }
+		Materials(Material material) {
+			this.material = material;
+			this.material.setName(this.toString());
+		}
+	}
 
-    @Override
-    public void event() {
-        for (Materials material : Materials.values()) {
-            MaterialRegister.registerMaterial(material.material);
-        }
+	@Override
+	public void event() {
+		for (Materials material : Materials.values()) {
+			Register.registerMaterial(material.material);
+		}
 		
 		/*for (Integer i = 0; i < 20000; i++) {
 			Material test = new Material();
@@ -33,5 +33,5 @@ public class MatReg implements MaterialRegistrationEvent {
 				System.out.println(i);
 			MaterialRegister.registerMaterial(new Material().setName(i.toString()).addPart("plate").addPart("ingot").addPart("dust"));
 		}*/
-    }
+	}
 }
