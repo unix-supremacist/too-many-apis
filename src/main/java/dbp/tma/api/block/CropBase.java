@@ -48,6 +48,11 @@ public class CropBase extends BlockCrops {
 		return item;
 	}
 
+	@Override
+	public String getUnlocalizedName() {
+		return "tile." + this.name;
+	}
+
 	public CropBase setItem(Item item) {
 		this.item = item;
 		return this;

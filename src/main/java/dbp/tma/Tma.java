@@ -18,8 +18,8 @@ import net.minecraft.item.Item;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Tma {
-	Block testCrop = new CropBase().setName("cotton").setIconLength(6).setBlockName("testCrop");
-	Block testNigger = new CropBase().setName("nigger").setIconLength(6).setBlockName("testNigger");
+	CropBase testCrop = new CropBase().setName("cotton").setIconLength(6).setName("testCrop");
+	CropBase testNigger = new CropBase().setName("nigger").setIconLength(6).setName("testNigger");
 	Item test = new MetaSeedBase(testCrop).addItem("testSeed", 3).addCrop(testNigger, 3).setUnlocalizedName("test");
 	Block chestTest = new BaseContainer(0).setBlockName("chestTest");
 	Item testMetaFood = new MetaFoodBase(false).setName("metafood").addHeal(4, 4).addSat(4.0F, 4).addItem("cotton", 4).setModid("rematerialized");
@@ -28,10 +28,9 @@ public class Tma {
 	public void preInit(FMLPreInitializationEvent event) {
 		EventListens.listen();
 		Event.runEvents();
-		//materialItems.register();
 		GameRegistry.registerItem(test, "test");
 		GameRegistry.registerItem(testMetaFood, "metafood");
-		((CropBase) testCrop).setItem(testMetaFood).setSeed(test).setItemMeta(4);
+		testCrop.setItem(testMetaFood).setSeed(test).setItemMeta(4);
 		GameRegistry.registerBlock(testCrop, "testCrop");
 		GameRegistry.registerBlock(testNigger, "testNigger");
 		GameRegistry.registerTileEntity(TileBase.class, "DbpTileBase");
