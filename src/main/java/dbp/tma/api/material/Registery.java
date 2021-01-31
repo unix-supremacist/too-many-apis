@@ -1,14 +1,13 @@
 package dbp.tma.api.material;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registery {
 	public static final HashMap<String, Part> parts = new HashMap<>();
@@ -18,24 +17,26 @@ public class Registery {
 		materials.put(material.getName(), material);
 		for (String matPart : material.parts) {
 			if (parts.containsKey(matPart)) {
-				if (parts.get(matPart).isEnabled() && matPart.equals(parts.get(matPart).getPartName())) {
+				if (parts.get(matPart).isEnabled() && matPart.equals(parts.get(matPart).getName())) {
+					System.out.println(matPart+material.getName());
 					parts.get(matPart)
-						.setColor(material.getColor(), material.getId())
-						.setSettingsString(material.getSettingsString(), material.getId())
-						.addPartSet(material.getPartSet(), material.getId())
-						.addItem(material.getName(), material.getId());
+						.setColor(material.getColor())
+						.setSettingsString(material.getSettingsString(), material.getName())
+						.setSettingsInt(material.getSettingsInt(), material.getName())
+						.addPartSet(material.getPartSet())
+						.addMaterial(material.getName());
 				}
 			}
 		}
 	}
 
 	public static void registerPart(Part part) {
-		parts.put(part.getPartName(), part);
+		parts.put(part.getName(), part);
 	}
 
 	public static void registerItems() {
 		for (Map.Entry<String, Part> part : parts.entrySet()) {
-			GameRegistry.registerItem(part.getValue(), part.getValue().getPartName());
+			GameRegistry.registerItem(part.getValue(), part.getValue().getName());
 		}
 	}
 
