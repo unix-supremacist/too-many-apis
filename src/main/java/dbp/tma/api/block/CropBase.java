@@ -17,11 +17,15 @@ public class CropBase extends BlockCrops {
 	protected Item seed;
 	protected int itemMeta;
 	protected int seedMeta;
-	protected String modid = "rematerialized";
+	protected String modid;
 	protected String name;
 	protected int iconLength = 4;
 	@SideOnly(Side.CLIENT)
 	protected  IIcon[] cropTexture;
+
+	public CropBase(String modid){
+		this.modid = modid;
+	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
