@@ -19,19 +19,19 @@ public class MatReg implements MaterialRegistrationEvent {
 	}
 
 	@Override
-	public void event() {
+		public void event() {
 		for (Materials material : Materials.values()) {
 			Registery.registerMaterial(material.material);
 		}
 
-		/*for (Integer i = 0; i < 20000; i++) {
-			Material test = new Material();
-			for (Integer i2 = 0; i2 < 15; i2++) {
-				test.addPart(i2.toString());
+		for (int i = 0; i < 3000; i++) {
+			Material test = new Material().setName(i+"");//.setColor(i);
+			for (int i2 = 0; i2 < 32; i2++) {
+				test.addPart(i2+i/3+"");
 			}
-			if(i == 1 |i == 19999)
-				System.out.println(i);
-			MaterialRegister.registerMaterial(new Material().setName(i.toString()).addPart("plate").addPart("ingot").addPart("dust"));
-		}*/
+			test.setPartSet(i/12+"");
+			Registery.registerMaterial(test);
+			System.out.println(i);
+		}
 	}
 }

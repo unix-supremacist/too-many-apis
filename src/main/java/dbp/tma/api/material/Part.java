@@ -18,13 +18,13 @@ public class Part extends Item {
 	protected IIcon[] icon = new IIcon[255];
 	protected String modid;
 	protected boolean enabled = true;
-	protected int psid = 1;
+	protected static int psid = 1;
 	protected int matid = 1;
 	protected final HashMap<Integer, Integer> colors = new HashMap<>();
-	protected final HashMap<String, Integer> partSets = new HashMap<>();
-	protected final HashMap<Integer, String> matSet = new HashMap<>();
-	protected final HashMap<String, HashMap<String, Integer>> settingsInt = new HashMap<>();
-	protected final HashMap<String, HashMap<String, String>> settingsString = new HashMap<>();
+	protected static final HashMap<String, Integer> partSets = new HashMap<>();
+	protected static final HashMap<Integer, String> matSet = new HashMap<>();
+	protected static final HashMap<String, HashMap<String, Integer>> settingsInt = new HashMap<>();
+	protected static final HashMap<String, HashMap<String, String>> settingsString = new HashMap<>();
 
 	public Part(String modid) {
 		setHasSubtypes(true);

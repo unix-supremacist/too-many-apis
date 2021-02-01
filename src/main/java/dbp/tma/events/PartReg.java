@@ -25,8 +25,8 @@ public class PartReg implements PartRegistrationEvent {
 			Registery.registerPart(part.part);
 		}
 
-		/*for (Integer i = 0; i < 15; i++) {
-			MaterialRegister.registerPart(new Part().setPartName(i.toString()));
-		}*/
+		for (Integer i = 0; i < 1000; i++) {
+			Registery.registerPart(new Part(Reference.MODID).setName(i.toString()));
+		}
 	}
 }
