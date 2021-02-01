@@ -19,9 +19,8 @@ public class CropBase extends BlockCrops {
 	protected int seedMeta;
 	protected String modid;
 	protected String name;
-	protected int iconLength = 4;
 	@SideOnly(Side.CLIENT)
-	protected  IIcon[] cropTexture;
+	protected  IIcon[] cropTexture = new IIcon[7];
 
 	public CropBase(String modid){
 		this.modid = modid;
@@ -30,10 +29,7 @@ public class CropBase extends BlockCrops {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int unused, int growth) {
-		if (growth > 2) {
-			return this.cropTexture[growth - 2];
-		}
-		return this.cropTexture[0];
+		return this.cropTexture[growth];
 	}
 
 	protected ItemStack seedDrop() {
@@ -77,24 +73,13 @@ public class CropBase extends BlockCrops {
 		return this;
 	}
 
-	public CropBase setIconLength(int iconLength) {
-		this.iconLength = iconLength;
-		return this;
-	}
-
 	public CropBase setName(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public CropBase setModid(String modid) {
-		this.modid = modid;
-		return this;
-	}
-
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister icon) {
-		this.cropTexture = new IIcon[iconLength];
 		for (int i = 0; i < this.cropTexture.length; ++i) {
 			this.cropTexture[i] = icon.registerIcon(modid + ":crop_" + name + "_" + i);
 		}
