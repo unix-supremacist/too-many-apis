@@ -25,13 +25,12 @@ public class MatReg implements MaterialRegistrationEvent {
 		}
 
 		for (int i = 0; i < 3000; i++) {
-			Material test = new Material().setName(i+"");//.setColor(i);
+			Material test = new Material().setName(i+"").setColor(i*5592);
 			for (int i2 = 0; i2 < 32; i2++) {
 				test.addPart(i2+i/3+"");
 			}
 			test.setPartSet(i/12+"");
 			Registery.registerMaterial(test);
-			System.out.println(i);
 		}
 	}
 }

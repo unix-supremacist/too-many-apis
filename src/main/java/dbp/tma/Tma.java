@@ -18,7 +18,7 @@ import net.minecraft.item.Item;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Tma {
-	CropBase testCrop = new CropBase(Reference.MODID).setName("cotton").setIconLength(6).setName("testCrop");
+	CropBase testCrop = new CropBase(Reference.MODID).setName("cotton").setName("testCrop");
 	Item test = new MetaSeedBase(testCrop).addItem("testSeed", 3).addCrop(testCrop, 3).setUnlocalizedName("test");
 	Block chestTest = new BaseContainer(0).setBlockName("chestTest");
 	Item testMetaFood = new MetaFoodBase(false).setName("metafood").addHeal(4, 4).addSat(4.0F, 4).addItem("cotton", 4).setModid(Reference.MODID);
