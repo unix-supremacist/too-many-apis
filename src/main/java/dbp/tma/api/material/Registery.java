@@ -42,7 +42,7 @@ public class Registery {
 	public static void registerOreDict() {
 		for (Map.Entry<String, Material> material : materials.entrySet()) {
 			for (String part : material.getValue().parts) {
-				OreDictionary.registerOre(part + StringUtils.capitalize(material.getKey()), new ItemStack(parts.get(part), 1, material.getValue().getId()));
+				if (parts.containsKey(part)) OreDictionary.registerOre(part + StringUtils.capitalize(material.getKey()), new ItemStack(parts.get(part), 1, material.getValue().getId()));
 			}
 		}
 	}

@@ -9,7 +9,11 @@ public class PartReg implements PartRegistrationEvent {
 	public enum Parts {
 		ingot(new Part(Reference.MODID)),
 		dust(new Part(Reference.MODID)),
-		plate(new Part(Reference.MODID));
+		plate(new Part(Reference.MODID)),
+		gear(new Part(Reference.MODID)),
+		gem(new Part(Reference.MODID)),
+		lens(new Part(Reference.MODID)),
+		stick(new Part(Reference.MODID));
 
 		public final Part part;
 
@@ -25,8 +29,8 @@ public class PartReg implements PartRegistrationEvent {
 			Registery.registerPart(part.part);
 		}
 
-		for (Integer i = 0; i < 1000; i++) {
-			Registery.registerPart(new Part(Reference.MODID).setName(i.toString()));
-		}
+		//for (Integer i = 0; i < 1000; i++) {
+		//	Registery.registerPart(new Part(Reference.MODID).setName(i.toString()));
+		//}
 	}
 }

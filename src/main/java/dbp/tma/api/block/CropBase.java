@@ -20,7 +20,7 @@ public class CropBase extends BlockCrops {
 	protected String modid;
 	protected String name;
 	@SideOnly(Side.CLIENT)
-	protected  IIcon[] cropTexture = new IIcon[7];
+	protected  IIcon[] cropTexture = new IIcon[8];
 
 	public CropBase(String modid){
 		this.modid = modid;

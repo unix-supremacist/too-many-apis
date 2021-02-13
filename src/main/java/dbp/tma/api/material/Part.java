@@ -3,6 +3,7 @@ package dbp.tma.api.material;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -83,7 +84,7 @@ public class Part extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack item) {
-		return "item." + mats.get(item.getItemDamage()) + name;
+		return "material." +mats.get(item.getItemDamage()) + "_" + this.name;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -124,7 +125,7 @@ public class Part extends Item {
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List itemList) {
-		for (int i = 0; i < 255; i++) {
+		for (int i = 1; i <= mats.size(); i++) {
 			itemList.add(new ItemStack(this, 1, i));
 		}
 	}

@@ -2,12 +2,13 @@ package dbp.tma.api.material;
 
 import dbp.tma.api.Main;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Material {
 	protected int id;
-	protected int color = 0xFFFFFF;
+	protected int color;
 	protected String name;
 	protected String type;
 	protected String partSet = "default";
@@ -16,9 +17,24 @@ public class Material {
 	protected final HashMap<String, String> settingsString = new HashMap<>();
 	protected final HashMap<String, Integer> settingsInt = new HashMap<>();
 
-	public Material() {
+	public Material(int color) {
 		Main.lastMaterialId++;
 		this.id = Main.lastMaterialId;
+		this.color = color;
+	}
+
+	public Material(int color, String partSet){
+		this(color);
+		this.partSet = partSet;
+	}
+
+	public Material(String partSet){
+		this();
+		this.partSet = partSet;
+	}
+
+	public Material(){
+		this(0xFFFFFF);
 	}
 
 	public Material setDisabled() {
@@ -40,23 +56,18 @@ public class Material {
 		return name;
 	}
 
-	public Material addPart(String part) {
-		this.parts.add(part);
+	public Material addPart(String... part) {
+		this.parts.addAll(Arrays.asList(part));
 		return this;
 	}
 
-	public Material setPartSet(String partSet) {
-		this.partSet = partSet;
+	public Material addParts(String[]... partArrays) {
+		for (String[] parts: partArrays) this.parts.addAll(Arrays.asList(parts));
 		return this;
 	}
 
 	public String getPartSet() {
 		return partSet;
-	}
-
-	public Material setColor(int color) {
-		this.color = color;
-		return this;
 	}
 
 	public HashSet<String> getParts() {
@@ -66,7 +77,6 @@ public class Material {
 	public int getId() {
 		return this.id;
 	}
-
 
 	public int getColor() {
 		return this.color;
