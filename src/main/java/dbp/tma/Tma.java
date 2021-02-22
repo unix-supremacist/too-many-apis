@@ -4,9 +4,11 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dbp.tma.api.block.CropBase;
 import dbp.tma.api.events.Event;
+import dbp.tma.api.gui.handler;
 import dbp.tma.api.item.MetaSeedFoodBase;
 import dbp.tma.api.material.Registery;
 import dbp.tma.events.EventListens;
@@ -15,6 +17,9 @@ import net.minecraft.item.Item;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Tma {
+	@Mod.Instance(Reference.MODID)
+		public static Tma tmaInstance;
+
 	CropBase testCrop = new CropBase(Reference.MODID).setName("cotton").setName("testCrop");
 	Item testSeedMetaFood = new MetaSeedFoodBase(Reference.MODID).addHeal(4, 4).addSat(4.0F, 4).addItem("cotton", 4).addCrop(testCrop, 4).setIconSize(5);
 
@@ -30,5 +35,6 @@ public class Tma {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		Registery.registerOreDict();
+		NetworkRegistry.INSTANCE.registerGuiHandler(tmaInstance, new handler());
 	}
 }
