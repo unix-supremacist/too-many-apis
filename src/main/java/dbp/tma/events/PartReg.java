@@ -1,25 +1,23 @@
 package dbp.tma.events;
 
-import dbp.tma.Reference;
 import dbp.tma.api.events.PartRegistrationEvent;
 import dbp.tma.api.material.Part;
 import dbp.tma.api.material.Registery;
 
 public class PartReg implements PartRegistrationEvent {
 	public enum Parts {
-		ingot(new Part(Reference.MODID)),
-		dust(new Part(Reference.MODID)),
-		plate(new Part(Reference.MODID)),
-		gear(new Part(Reference.MODID)),
-		gem(new Part(Reference.MODID)),
-		lens(new Part(Reference.MODID)),
-		stick(new Part(Reference.MODID));
+		ingot(new Part()),
+		dust(new Part()),
+		plate(new Part()),
+		gear(new Part()),
+		gem(new Part()),
+		lens(new Part()),
+		stick(new Part());
 
 		public final Part part;
 
 		Parts(Part part) {
-			this.part = part;
-			this.part.setName(this.toString());
+			this.part = part.setName(this.toString());
 		}
 	}
 

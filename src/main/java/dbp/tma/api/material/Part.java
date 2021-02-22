@@ -2,8 +2,8 @@ package dbp.tma.api.material;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dbp.tma.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,8 +19,8 @@ public class Part extends Item {
 	protected IIcon[] icon = new IIcon[255];
 	protected String modid;
 	protected boolean enabled = true;
-	protected int psid = 1;
-	protected int matid = 1;
+	protected int partSetID = 1;
+	protected int matSetID = 1;
 	protected final HashMap<Integer, Integer> colors = new HashMap<>();
 	protected final HashMap<String, Integer> partSets = new HashMap<>();
 	protected final HashMap<Integer, String> matSet = new HashMap<>();
@@ -30,6 +30,10 @@ public class Part extends Item {
 	public Part(String modid) {
 		setHasSubtypes(true);
 		this.modid = modid;
+	}
+
+	public Part() {
+		this(Reference.MODID);
 	}
 
 	public Part disable() {
@@ -43,7 +47,7 @@ public class Part extends Item {
 	}
 
 	public Part setColor(int color) {
-		colors.put(matid, color);
+		colors.put(matSetID, color);
 		return this;
 	}
 
@@ -64,7 +68,7 @@ public class Part extends Item {
 
 	@Override
 	public void registerIcons(IIconRegister register) {
-		icon[0] = register.registerIcon("tma" + ":item_" + name);
+		icon[0] = register.registerIcon(modid + ":item_" + name);
 		for (Entry<String, Integer> partSet : partSets.entrySet()) {
 			icon[partSet.getValue()] = register.registerIcon(modid + ":" + partSet.getKey() + "/item_" + name);
 		}
@@ -74,7 +78,7 @@ public class Part extends Item {
 		return name;
 	}
 
-	public String getModid (){
+	public String getModid() {
 		return modid;
 	}
 
@@ -84,7 +88,7 @@ public class Part extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack item) {
-		return "material." +mats.get(item.getItemDamage()) + "_" + this.name;
+		return "material." + mats.get(item.getItemDamage()) + "_" + this.name;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -107,18 +111,18 @@ public class Part extends Item {
 	public Part addPartSet(String name) {
 		if (!name.equals("default")) {
 			if (!partSets.containsKey(name)) {
-				partSets.put(name, psid);
-				psid++;
+				partSets.put(name, partSetID);
+				partSetID++;
 			}
-			matSet.put(matid, name);
+			matSet.put(matSetID, name);
 		}
 		return this;
 	}
 
 	public Part addMaterial(String name) {
-		if(!mats.containsValue(name)){
-			this.mats.put(matid, name);
-			matid++;
+		if (!mats.containsValue(name)) {
+			this.mats.put(matSetID, name);
+			matSetID++;
 		}
 		return this;
 	}
