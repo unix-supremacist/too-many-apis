@@ -1,40 +1,36 @@
 package dbp.tma.api.material;
 
-import dbp.tma.api.Main;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Material {
+	protected static int lastMaterialId = 0;
+
 	protected int id;
 	protected int color;
 	protected String name;
-	protected String type;
-	protected String partSet = "default";
+	protected String partSet;
 	protected boolean enabled = true;
 	protected final HashSet<String> parts = new HashSet<>();
 	protected final HashMap<String, String> settingsString = new HashMap<>();
 	protected final HashMap<String, Integer> settingsInt = new HashMap<>();
 
-	public Material(int color) {
-		Main.lastMaterialId++;
-		this.id = Main.lastMaterialId;
+	public Material(int color, String partSet) {
+		this.id = ++lastMaterialId;
 		this.color = color;
-	}
-
-	public Material(int color, String partSet){
-		this(color);
 		this.partSet = partSet;
 	}
 
-	public Material(String partSet){
-		this();
-		this.partSet = partSet;
+	public Material(int color) {
+		this(color, "default");
 	}
 
-	public Material(){
-		this(0xFFFFFF);
+	public Material(String partSet) {
+		this(0xFFFFFF, partSet);
+	}
+
+	public Material() {
+		this(0xFFFFFF, "default");
 	}
 
 	public Material setDisabled() {
@@ -53,21 +49,25 @@ public class Material {
 	}
 
 	public String getName() {
-		return name;
-	}
-
-	public Material addPart(String... part) {
-		this.parts.addAll(Arrays.asList(part));
-		return this;
+		return this.name;
 	}
 
 	public Material addParts(String[]... partArrays) {
-		for (String[] parts: partArrays) this.parts.addAll(Arrays.asList(parts));
+		for (String[] parts : partArrays) this.parts.addAll(Arrays.asList(parts));
+		return this;
+	}
+
+	public Material addPart(String... parts) {
+		return addParts(parts);
+	}
+
+	public Material addPart(Object... parts) {
+		for (Object partEnum: parts) this.parts.add(partEnum.toString());
 		return this;
 	}
 
 	public String getPartSet() {
-		return partSet;
+		return this.partSet;
 	}
 
 	public HashSet<String> getParts() {

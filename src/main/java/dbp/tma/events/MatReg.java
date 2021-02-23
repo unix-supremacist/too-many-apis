@@ -4,15 +4,9 @@ import dbp.tma.api.events.MaterialRegistrationEvent;
 import dbp.tma.api.material.Material;
 import dbp.tma.api.material.Registery;
 
-public class MatReg implements MaterialRegistrationEvent {
-	static String dust = "dust";
-	static String gear = "gear";
-	static String stick = "stick";
-	static String plate = "plate";
-	static String ingot = "ingot";
-	static String gem = "gem";
-	static String lens = "lens";
+import static dbp.tma.events.PartReg.Parts.*;
 
+public class MatReg implements MaterialRegistrationEvent {
 	public enum Materials {
 		copper(new Material(0xB4713D).addPart(dust, ingot)),
 		iron(new Material(0xB8B8B8).addPart(dust)),
@@ -40,13 +34,12 @@ public class MatReg implements MaterialRegistrationEvent {
 		public final Material material;
 
 		Materials(Material material) {
-			this.material = material;
-			this.material.setName(this.toString());
+			this.material = material.setName(this.toString());
 		}
 	}
 
 	@Override
-		public void event() {
+	public void event() {
 		for (Materials material : Materials.values()) {
 			Registery.registerMaterial(material.material);
 		}
