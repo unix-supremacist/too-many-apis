@@ -1,7 +1,10 @@
 package dbp.tma.api.block;
 
 import net.minecraft.block.BlockFurnace;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -223,5 +226,13 @@ public class Tile extends TileEntity implements ISidedInventory {
 		if (flag1){
 			this.markDirty();
 		}
+	}
+
+	public Container getContainer(InventoryPlayer playerInventory){
+			return new dbp.tma.api.block.Container(playerInventory, this);
+	}
+
+	public Gui getGui(InventoryPlayer playerInventory){
+		return new dbp.tma.api.block.Gui(playerInventory, this);
 	}
 }
