@@ -33,8 +33,10 @@ public class MetaSeedItem extends SeedBase implements IMetaItem {
 		this(modid, Blocks.farmland);
 	}
 
-	public void addItem(String name, Block crop) {
-		this.items.put(this.lastID++, new SeedInstance(name, crop));
+	public ItemStack addItem(String name, Block crop) {
+		int meta = this.lastID++;
+		this.items.put(meta, new SeedInstance(name, crop));
+		return new ItemStack(this, 1, meta);
 	}
 
 	protected SeedInstance getItem(ItemStack item) {
@@ -54,13 +56,13 @@ public class MetaSeedItem extends SeedBase implements IMetaItem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.icons = this.registerIcons(this.modid, this.items, TYPE_NAME, register);
+		this.registerIcons(this.modid, this.items, TYPE_NAME, register);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int damage) {
-		return this.getIconFromDamage(this.icons, damage);
+	public IIcon getIconFromDamage(int meta) {
+		return this.getIconFromDamage(this.items, meta);
 	}
 
 	@Override

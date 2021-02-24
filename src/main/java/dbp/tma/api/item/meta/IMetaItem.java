@@ -20,18 +20,17 @@ public interface IMetaItem {
 		}
 	}
 
-	default IIcon[] registerIcons(String modid, HashMap<Integer, ? extends ItemInstance> items, String metaTypeName, IIconRegister register) {
-		IIcon[] icons = new IIcon[items.size()];
-		for (int i = 0; i < items.size(); i++) {
-			icons[i] = register.registerIcon(modid + ":item_" + metaTypeName + "_" + items.get(i).getName());
+	default void registerIcons(String modid, HashMap<Integer, ? extends ItemInstance> items, String metaTypeName, IIconRegister register) {
+		for (ItemInstance item : items.values()) {
+			item.setIcon(register.registerIcon(modid + ":item_" + metaTypeName + "_" + item.getName()));
 		}
-		return icons;
 	}
 
-	default IIcon getIconFromDamage(IIcon[] icons, int damage) {
+	default IIcon getIconFromDamage(HashMap<Integer, ? extends ItemInstance> items, int meta) {
+		ItemInstance item = items.getOrDefault(meta, null);
 		IIcon icon = null;
-		if (damage < icons.length) {
-			icon = icons[damage];
+		if (item != null) {
+			icon = item.getIcon();
 		}
 		return icon;
 	}

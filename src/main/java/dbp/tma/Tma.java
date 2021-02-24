@@ -25,7 +25,7 @@ public class Tma {
 		EventListens.listen();
 		Event.runEvents();
 
-		this.loadCrops();
+		//this.loadCrops(); //uncomment to play with crops ;p
 	}
 
 	@EventHandler
@@ -36,12 +36,18 @@ public class Tma {
 
 	public MetaSeedFoodItem metaSeedFoodItem;
 	public CropBase specialCarrotCrop;
+	public ItemStack specialCarrotItemStack;
 
 	private void loadCrops() {
+		//Create seed food meta item
 		this.metaSeedFoodItem = new MetaSeedFoodItem(Reference.MODID, Blocks.farmland);
+		//Registers it to the forge registry
 		GameRegistry.registerItem(this.metaSeedFoodItem, "metaSeedFoodItem");
-		this.specialCarrotCrop = new CropBase(Reference.MODID, "SpecialCarrot", new ItemStack(this.metaSeedFoodItem, 1, 0));
-		this.metaSeedFoodItem.addItem("YummyCarrot", this.specialCarrotCrop, 50, 50);
-		GameRegistry.registerBlock(this.specialCarrotCrop, "DirtyCarrot");
+		//Creates a carrot crop
+		this.specialCarrotCrop = new CropBase(Reference.MODID, "CarrotCrop", this.metaSeedFoodItem, 0);
+		//Registers it to the forge registry
+		GameRegistry.registerBlock(this.specialCarrotCrop, "CarrotCrop");
+		//Creates the carrot food and seed, bound to the carrot crop
+		this.specialCarrotItemStack = this.metaSeedFoodItem.addItem("Carrot", 0, this.specialCarrotCrop, 50, 50);
 	}
 }

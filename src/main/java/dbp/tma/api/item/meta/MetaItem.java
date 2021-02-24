@@ -25,8 +25,10 @@ public class MetaItem extends ItemBase implements IMetaItem {
 		this.setHasSubtypes(true);
 	}
 
-	public void addItem(String name) {
-		this.items.put(this.lastID++, new ItemInstance(name));
+	public ItemStack addItem(String name) {
+		int meta = this.lastID++;
+		this.items.put(meta, new ItemInstance(name));
+		return new ItemStack(this, 1, meta);
 	}
 
 	protected ItemInstance getItem(ItemStack item) {
@@ -46,12 +48,12 @@ public class MetaItem extends ItemBase implements IMetaItem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.icons = this.registerIcons(this.modid, this.items, TYPE_NAME, register);
+		this.registerIcons(this.modid, this.items, TYPE_NAME, register);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int damage) {
-		return this.getIconFromDamage(this.icons, damage);
+	public IIcon getIconFromDamage(int meta) {
+		return this.getIconFromDamage(this.items, meta);
 	}
 }

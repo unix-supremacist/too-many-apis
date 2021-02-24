@@ -15,38 +15,24 @@ import java.util.Random;
 public class CropBase extends BlockCrops {
 	protected final String modid;
 	protected final String name;
-	protected final ItemStack drop;
-	protected final ItemStack seed;//TODO Create item stack that holds just Item and Meta
+	protected final Item dropItem;
+	protected final int dropMeta;
+	protected final Item seedItem;
+	protected final int seedMeta;
 	@SideOnly(Side.CLIENT)
 	protected IIcon[] icons = new IIcon[8];
 
-	public CropBase(String modid, String name, ItemStack drop, ItemStack seed) {
+	public CropBase(String modid, String name, Item dropItem, int dropMeta, Item seedItem, int seedMeta) {
 		this.modid = modid;
 		this.name = name;
-		this.drop = drop;
-		this.seed = seed;
+		this.dropItem = dropItem;
+		this.dropMeta = dropMeta;
+		this.seedItem = seedItem;
+		this.seedMeta = seedMeta;
 	}
 
-	public CropBase(String modid, String name, ItemStack drop) {
-		this(modid, name, drop, drop);
-	}
-
-	protected ItemStack getDrop() {
-		return this.drop.copy();
-	}
-
-	protected ItemStack getSeed() {
-		return this.seed.copy();
-	}
-
-	/**
-	 * Get seed item
-	 *
-	 * @return seed Item
-	 */
-	@Override
-	protected Item func_149866_i() {
-		return this.getDrop().getItem();
+	public CropBase(String modid, String name, Item dropItem, int ItemMeta) {
+		this(modid, name, dropItem, ItemMeta, dropItem, ItemMeta);
 	}
 
 	/**
@@ -56,7 +42,25 @@ public class CropBase extends BlockCrops {
 	 */
 	@Override
 	protected Item func_149865_P() {
-		return this.getSeed().getItem();
+		return this.dropItem;
+	}
+
+	/**
+	 * Get seed item
+	 *
+	 * @return seed Item
+	 */
+	@Override
+	protected Item func_149866_i() {
+		return this.seedItem;
+	}
+
+	protected ItemStack getDrop() {
+		return new ItemStack(this.dropItem, 1, this.dropMeta);
+	}
+
+	protected ItemStack getSeed() {
+		return new ItemStack(this.seedItem, 1, this.seedMeta);
 	}
 
 	@Override
@@ -81,19 +85,19 @@ public class CropBase extends BlockCrops {
 		return meta == 7 ? this.getDrop() : this.getSeed();
 	}
 
-	@Override //TODO Streamline the RNG logic, similar to vanilla.
+	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<>();
-
-		int count = this.quantityDropped(meta, fortune, world.rand);
-		for (int i = 0; i < count; i++) {
-			ItemStack item = this.getItemstackDropped(meta, world.rand, fortune);
-			if (item != null) {
-				drops.add(item);
+		if (meta < 7) {
+			drops.add(this.getSeed());
+		} else {
+			int count = this.quantityDropped(meta, fortune, world.rand);
+			for (int i = 0; i < count; i++) {
+				ItemStack item = this.getItemstackDropped(meta, world.rand, fortune);
+				if (item != null) {
+					drops.add(item);
+				}
 			}
-		}
-
-		if (meta >= 7) {
 			for (int i = 0; i < 3 + fortune; ++i) {
 				if (world.rand.nextInt(15) <= meta) {
 					drops.add(this.getSeed());

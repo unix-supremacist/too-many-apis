@@ -17,8 +17,8 @@ public class MetaFoodItem extends FoodBase implements IMetaItem {
 	protected static final String TYPE_NAME = "food";
 	protected final HashMap<Integer, FoodInstance> items = new HashMap<>();
 	protected int lastID = 0;
+
 	@SideOnly(Side.CLIENT)
-	protected IIcon[] icons;
 
 	public MetaFoodItem(String modid, boolean wolf) {
 		super(modid, wolf);
@@ -29,8 +29,10 @@ public class MetaFoodItem extends FoodBase implements IMetaItem {
 		this(modid, false);
 	}
 
-	public void addItem(String name, int healing, int saturation) {
-		this.items.put(this.lastID++, new FoodInstance(name, healing, saturation));
+	public ItemStack addItem(String name, int hunger, int saturation) {
+		int meta = this.lastID++;
+		this.items.put(meta, new FoodInstance(name, hunger, saturation));
+		return new ItemStack(this, 1, meta);
 	}
 
 	protected FoodInstance getItem(ItemStack item) {
@@ -38,14 +40,14 @@ public class MetaFoodItem extends FoodBase implements IMetaItem {
 	}
 
 	/**
-	 * Get healing
+	 * Get hunger
 	 *
 	 * @param item food being checked
-	 * @return the health restored
+	 * @return the hunger restored
 	 */
 	@Override
 	public int func_150905_g(ItemStack item) {
-		return this.getItem(item).getHealing();
+		return this.getItem(item).getHunger();
 	}
 
 	/**
@@ -72,12 +74,12 @@ public class MetaFoodItem extends FoodBase implements IMetaItem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.icons = this.registerIcons(this.modid, this.items, TYPE_NAME, register);
+		this.registerIcons(this.modid, this.items, TYPE_NAME, register);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int damage) {
-		return this.getIconFromDamage(this.icons, damage);
+	public IIcon getIconFromDamage(int meta) {
+		return this.getIconFromDamage(this.items, meta);
 	}
 }
