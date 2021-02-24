@@ -19,9 +19,10 @@ import java.util.List;
 
 public class MetaSeedFoodItem extends SeedFoodBase implements IMetaItem {
 	protected static final String TYPE_NAME = "seedfood";
-	protected IIcon[] icons;
 	protected final HashMap<Integer, SeedFoodInstance> items = new HashMap<>();
 	protected int lastID = 0;
+	@SideOnly(Side.CLIENT)
+	protected IIcon[] icons;
 
 	public MetaSeedFoodItem(String modid, Block farmland) {
 		super(modid, farmland);

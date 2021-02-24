@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 public abstract class SeedBase extends ItemSeeds implements IItemPlantable {
 	protected final String modid;

@@ -15,9 +15,10 @@ import java.util.List;
 
 public class MetaItem extends ItemBase implements IMetaItem {
 	protected static final String TYPE_NAME = "meta";
-	protected IIcon[] icons;
-	private final HashMap<Integer, ItemInstance> items = new HashMap<>();
+	protected final HashMap<Integer, ItemInstance> items = new HashMap<>();
 	protected int lastID = 0;
+	@SideOnly(Side.CLIENT)
+	protected IIcon[] icons;
 
 	public MetaItem(String modid) {
 		super(modid);

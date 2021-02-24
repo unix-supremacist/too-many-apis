@@ -15,9 +15,10 @@ import java.util.List;
 
 public class MetaFoodItem extends FoodBase implements IMetaItem {
 	protected static final String TYPE_NAME = "food";
-	protected IIcon[] icons;
-	private final HashMap<Integer, FoodInstance> items = new HashMap<>();
+	protected final HashMap<Integer, FoodInstance> items = new HashMap<>();
 	protected int lastID = 0;
+	@SideOnly(Side.CLIENT)
+	protected IIcon[] icons;
 
 	public MetaFoodItem(String modid, boolean wolf) {
 		super(modid, wolf);

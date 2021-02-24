@@ -13,57 +13,67 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CropBase extends BlockCrops {
-	protected Item dropItem;
-	protected Item seedItem;
-	protected int itemMeta;
-	protected int seedMeta;
-	protected String modid;
-	protected String name;
+	protected final String modid;
+	protected final String name;
+	protected final ItemStack drop;
+	protected final ItemStack seed;//TODO Create item stack that holds just Item and Meta
 	@SideOnly(Side.CLIENT)
-	protected IIcon[] cropTexture = new IIcon[8];
+	protected IIcon[] icons = new IIcon[8];
 
-	public CropBase(String modid, String name, Item dropItem, int itemMeta, Item seedItem, int seedMeta) {
+	public CropBase(String modid, String name, ItemStack drop, ItemStack seed) {
 		this.modid = modid;
 		this.name = name;
-		this.dropItem = dropItem;
-		this.itemMeta = itemMeta;
-		this.seedItem = seedItem;
-		this.seedMeta = seedMeta;
+		this.drop = drop;
+		this.seed = seed;
+	}
+
+	public CropBase(String modid, String name, ItemStack drop) {
+		this(modid, name, drop, drop);
+	}
+
+	protected ItemStack getDrop() {
+		return this.drop.copy();
+	}
+
+	protected ItemStack getSeed() {
+		return this.seed.copy();
+	}
+
+	/**
+	 * Get seed item
+	 *
+	 * @return seed Item
+	 */
+	@Override
+	protected Item func_149866_i() {
+		return this.getDrop().getItem();
+	}
+
+	/**
+	 * Get drop item
+	 *
+	 * @return drop Item
+	 */
+	@Override
+	protected Item func_149865_P() {
+		return this.getSeed().getItem();
+	}
+
+	@Override
+	public String getUnlocalizedName() {
+		return "tile." + this.modid + ".crop." + this.name;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int growth) {
-		return this.cropTexture[growth];
-	}
-
-	protected ItemStack getSeed() {
-		return new ItemStack(this.seedItem, 1, this.seedMeta);
-	}
-
-	protected ItemStack getDrop() {
-		return new ItemStack(this.dropItem, 1, this.itemMeta);
-	}
-
-	@Override
-	protected Item func_149866_i() {
-		return this.seedItem;
-	}
-
-	@Override
-	protected Item func_149865_P() {
-		return this.dropItem;
-	}
-
-	@Override
-	public String getUnlocalizedName() {
-		return "tile." + this.modid + "." + this.name;
+		return this.icons[growth];
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister icon) {
-		for (int i = 0; i < this.cropTexture.length; ++i) {
-			this.cropTexture[i] = icon.registerIcon(this.modid + ":crop_" + this.name + "_" + i);
+		for (int i = 0; i < this.icons.length; ++i) {
+			this.icons[i] = icon.registerIcon(this.modid + ":crop_" + this.name + "_" + i);
 		}
 	}
 
@@ -71,9 +81,10 @@ public class CropBase extends BlockCrops {
 		return meta == 7 ? this.getDrop() : this.getSeed();
 	}
 
-	@Override
+	@Override //TODO Streamline the RNG logic, similar to vanilla.
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<>();
+
 		int count = this.quantityDropped(meta, fortune, world.rand);
 		for (int i = 0; i < count; i++) {
 			ItemStack item = this.getItemstackDropped(meta, world.rand, fortune);

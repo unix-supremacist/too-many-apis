@@ -13,34 +13,35 @@ import dbp.tma.api.item.meta.MetaSeedFoodItem;
 import dbp.tma.api.material.Registery;
 import dbp.tma.events.EventListens;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Tma {
 	@Mod.Instance(Reference.MODID)
 	public static Tma tmaInstance;
 
-	CropBase testCrop;
-	Item testSeedMetaFood;
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		EventListens.listen();
 		Event.runEvents();
 
-		//Creates a meta item that can store a ton of seed-food items
-		this.testSeedMetaFood = new MetaSeedFoodItem(Reference.MODID, Blocks.farmland);
-		GameRegistry.registerItem(this.testSeedMetaFood, "metafood");
-
-		this.testCrop = new CropBase(Reference.MODID, "testCrop", this.testSeedMetaFood, 0, this.testSeedMetaFood, 0);
-		((MetaSeedFoodItem)this.testSeedMetaFood).addItem("testCrop", this.testCrop, 0, 0);
-
-		GameRegistry.registerBlock(this.testCrop, "testCrop");
+		this.loadCrops();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		Registery.registerOreDict();
 		NetworkRegistry.INSTANCE.registerGuiHandler(tmaInstance, new handler());
+	}
+
+	public MetaSeedFoodItem metaSeedFoodItem;
+	public CropBase specialCarrotCrop;
+
+	private void loadCrops() {
+		this.metaSeedFoodItem = new MetaSeedFoodItem(Reference.MODID, Blocks.farmland);
+		GameRegistry.registerItem(this.metaSeedFoodItem, "metaSeedFoodItem");
+		this.specialCarrotCrop = new CropBase(Reference.MODID, "SpecialCarrot", new ItemStack(this.metaSeedFoodItem, 1, 0));
+		this.metaSeedFoodItem.addItem("YummyCarrot", this.specialCarrotCrop, 50, 50);
+		GameRegistry.registerBlock(this.specialCarrotCrop, "DirtyCarrot");
 	}
 }
