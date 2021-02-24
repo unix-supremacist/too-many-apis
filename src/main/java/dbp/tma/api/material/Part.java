@@ -28,7 +28,7 @@ public class Part extends Item {
 	protected final HashMap<String, HashMap<String, String>> settingsString = new HashMap<>();
 
 	public Part(String modid) {
-		setHasSubtypes(true);
+		this.setHasSubtypes(true);
 		this.modid = modid;
 	}
 
@@ -37,27 +37,27 @@ public class Part extends Item {
 	}
 
 	public Part disable() {
-		enabled = false;
+		this.enabled = false;
 		return this;
 	}
 
 	public Part enable() {
-		enabled = true;
+		this.enabled = true;
 		return this;
 	}
 
 	public Part setColor(int color) {
-		colors.put(matSetID, color);
+		this.colors.put(this.matSetID, color);
 		return this;
 	}
 
 	public Part setSettingsInt(HashMap<String, Integer> settings, String id) {
-		settingsInt.put(id, settings);
+		this.settingsInt.put(id, settings);
 		return this;
 	}
 
 	public Part setSettingsString(HashMap<String, String> settings, String id) {
-		settingsString.put(id, settings);
+		this.settingsString.put(id, settings);
 		return this;
 	}
 
@@ -68,68 +68,68 @@ public class Part extends Item {
 
 	@Override
 	public void registerIcons(IIconRegister register) {
-		icon[0] = register.registerIcon(modid + ":item_" + name);
-		for (Entry<String, Integer> partSet : partSets.entrySet()) {
-			icon[partSet.getValue()] = register.registerIcon(modid + ":" + partSet.getKey() + "/item_" + name);
+		this.icon[0] = register.registerIcon(this.modid + ":item_" + this.name);
+		for (Entry<String, Integer> partSet : this.partSets.entrySet()) {
+			this.icon[partSet.getValue()] = register.registerIcon(this.modid + ":" + partSet.getKey() + "/item_" + this.name);
 		}
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getModid() {
-		return modid;
+		return this.modid;
 	}
 
 	public boolean isEnabled() {
-		return enabled;
+		return this.enabled;
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack item) {
-		return "material." + mats.get(item.getItemDamage()) + "_" + this.name;
+		return "item." + this.modid + this.mats.get(item.getItemDamage()) + "_" + this.name;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public int getColorFromItemStack(ItemStack itemStack, int u) {
-		if (colors.containsKey(itemStack.getItemDamage())) {
-			return colors.get(itemStack.getItemDamage());
+		if (this.colors.containsKey(itemStack.getItemDamage())) {
+			return this.colors.get(itemStack.getItemDamage());
 		}
 		return 0xFFFFFF;
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (matSet.containsKey(meta)) {
-			return icon[partSets.get(matSet.get(meta))];
+		if (this.matSet.containsKey(meta)) {
+			return this.icon[this.partSets.get(this.matSet.get(meta))];
 		}
-		return icon[0];
+		return this.icon[0];
 	}
 
 	public Part addPartSet(String name) {
 		if (!name.equals("default")) {
-			if (!partSets.containsKey(name)) {
-				partSets.put(name, partSetID);
-				partSetID++;
+			if (!this.partSets.containsKey(name)) {
+				this.partSets.put(name, this.partSetID);
+				this.partSetID++;
 			}
-			matSet.put(matSetID, name);
+			this.matSet.put(this.matSetID, name);
 		}
 		return this;
 	}
 
 	public Part addMaterial(String name) {
-		if (!mats.containsValue(name)) {
-			this.mats.put(matSetID, name);
-			matSetID++;
+		if (!this.mats.containsValue(name)) {
+			this.mats.put(this.matSetID, name);
+			this.matSetID++;
 		}
 		return this;
 	}
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List itemList) {
-		for (int i = 1; i <= mats.size(); i++) {
+		for (int i = 1; i <= this.mats.size(); i++) {
 			itemList.add(new ItemStack(this, 1, i));
 		}
 	}

@@ -13,100 +13,82 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CropBase extends BlockCrops {
-	protected Item item;
-	protected Item seed;
+	protected Item dropItem;
+	protected Item seedItem;
 	protected int itemMeta;
 	protected int seedMeta;
 	protected String modid;
 	protected String name;
 	@SideOnly(Side.CLIENT)
-	protected  IIcon[] cropTexture = new IIcon[8];
+	protected IIcon[] cropTexture = new IIcon[8];
 
-	public CropBase(String modid){
+	public CropBase(String modid, String name, Item dropItem, int itemMeta, Item seedItem, int seedMeta) {
 		this.modid = modid;
+		this.name = name;
+		this.dropItem = dropItem;
+		this.itemMeta = itemMeta;
+		this.seedItem = seedItem;
+		this.seedMeta = seedMeta;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IIcon getIcon(int unused, int growth) {
+	public IIcon getIcon(int side, int growth) {
 		return this.cropTexture[growth];
 	}
 
-	protected ItemStack seedDrop() {
-		return new ItemStack(seed, 1, seedMeta);
+	protected ItemStack getSeed() {
+		return new ItemStack(this.seedItem, 1, this.seedMeta);
 	}
 
-	protected ItemStack itemDrop() {
-		return new ItemStack(item, 1, itemMeta);
+	protected ItemStack getDrop() {
+		return new ItemStack(this.dropItem, 1, this.itemMeta);
 	}
 
+	@Override
 	protected Item func_149866_i() {
-		return seed;
+		return this.seedItem;
 	}
 
+	@Override
 	protected Item func_149865_P() {
-		return item;
+		return this.dropItem;
 	}
 
 	@Override
 	public String getUnlocalizedName() {
-		return "tile." + this.name;
-	}
-
-	public CropBase setItem(Item item) {
-		this.item = item;
-		return this;
-	}
-
-	public CropBase setSeed(Item seed) {
-		this.seed = seed;
-		return this;
-	}
-
-	public CropBase setItemMeta(int itemMeta) {
-		this.itemMeta = itemMeta;
-		return this;
-	}
-
-	public CropBase setSeedMeta(int seedMeta) {
-		this.seedMeta = seedMeta;
-		return this;
-	}
-
-	public CropBase setName(String name) {
-		this.name = name;
-		return this;
+		return "tile." + this.modid + "." + this.name;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister icon) {
 		for (int i = 0; i < this.cropTexture.length; ++i) {
-			this.cropTexture[i] = icon.registerIcon(modid + ":crop_" + name + "_" + i);
+			this.cropTexture[i] = icon.registerIcon(this.modid + ":crop_" + this.name + "_" + i);
 		}
 	}
 
-	public ItemStack getItemstackDropped(int meta, Random p_149650_2_, int p_149650_3_) {
-		return meta == 7 ? this.itemDrop() : this.seedDrop();
+	public ItemStack getItemstackDropped(int meta, Random random, int fortune) {
+		return meta == 7 ? this.getDrop() : this.getSeed();
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		int count = quantityDropped(metadata, fortune, world.rand);
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune) {
+		ArrayList<ItemStack> drops = new ArrayList<>();
+		int count = this.quantityDropped(meta, fortune, world.rand);
 		for (int i = 0; i < count; i++) {
-			ItemStack item = getItemstackDropped(metadata, world.rand, fortune);
+			ItemStack item = this.getItemstackDropped(meta, world.rand, fortune);
 			if (item != null) {
-				ret.add(item);
+				drops.add(item);
 			}
 		}
 
-		if (metadata >= 7) {
+		if (meta >= 7) {
 			for (int i = 0; i < 3 + fortune; ++i) {
-				if (world.rand.nextInt(15) <= metadata) {
-					ret.add(this.seedDrop());
+				if (world.rand.nextInt(15) <= meta) {
+					drops.add(this.getSeed());
 				}
 			}
 		}
-		return ret;
+		return drops;
 	}
 }
