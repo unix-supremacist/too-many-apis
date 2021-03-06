@@ -25,7 +25,7 @@ public class Machine extends BlockContainer {
 	@SideOnly(Side.CLIENT) private IIcon icon;
 	private final Random random = new Random();
 
-	protected Machine() {
+	public Machine() {
 		super(Material.iron);
 	}
 

@@ -7,6 +7,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dbp.tma.api.block.CropBase;
+import dbp.tma.api.block.Machine;
+import dbp.tma.api.block.Tile;
 import dbp.tma.api.events.Event;
 import dbp.tma.api.gui.handler;
 import dbp.tma.api.item.meta.MetaSeedFoodItem;
@@ -26,6 +28,8 @@ public class Tma {
 		Event.runEvents();
 
 		//this.loadCrops(); //uncomment to play with crops ;p
+		GameRegistry.registerTileEntity(Tile.class, "tmatile");
+		GameRegistry.registerBlock(new Machine(), "gay");
 	}
 
 	@EventHandler

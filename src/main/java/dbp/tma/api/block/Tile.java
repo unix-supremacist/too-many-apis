@@ -16,14 +16,13 @@ public class Tile extends TileEntity implements ISidedInventory {
 	protected int power;
 	protected int processTime;
 	protected String name;
-	protected ItemStack[] inventory;
+	protected ItemStack[] inventory = new ItemStack[2];
 	private static final int[] slotsTop = new int[] {0};
-	private static final int[] slotsBottom = new int[] {2, 1};
-	private static final int[] slotsSides = new int[] {1};
+	private static final int[] slotsBottom = new int[] {2};
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return side == 0 ? slotsBottom : (side == 1 ? slotsTop : slotsSides);
+		return side == 0 ? slotsBottom : (side == 1 ? slotsTop : null);
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class Tile extends TileEntity implements ISidedInventory {
 		NBTTagList list = tag.getTagList("Items", 10);
 		this.inventory = new ItemStack[this.getSizeInventory()];
 
-		for(int i = 0; i < list.tagCount(); i++){
+		for(int i = 0; i < list.tagCount(); ++i){
 			NBTTagCompound tag2 = list.getCompoundTagAt(i);
 			byte b = tag2.getByte("Slot");
 			if(b > 0 && b < this.inventory.length) this.inventory[b] = ItemStack.loadItemStackFromNBT(tag2);
@@ -138,7 +137,7 @@ public class Tile extends TileEntity implements ISidedInventory {
 		tag.setInteger("Power", this.power);
 		NBTTagList list = new NBTTagList();
 
-		for(int i = 0; i < this.inventory.length; i++){
+		for(int i = 0; i < this.inventory.length; ++i){
 			if (this.inventory[i] != null) {
 				NBTTagCompound tag2 = new NBTTagCompound();
 				tag2.setByte("Slot", (byte) i);
@@ -157,10 +156,10 @@ public class Tile extends TileEntity implements ISidedInventory {
 			canProcess = true;
 			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.inventory[0]);
 			if (itemstack == null) canProcess = false;
-			if (this.inventory[2] != null) {
-				if (!this.inventory[2].isItemEqual(itemstack)) canProcess = false;
-				int result = inventory[2].stackSize + itemstack.stackSize;
-				canProcess = result <= getInventoryStackLimit() && result <= this.inventory[2].getMaxStackSize(); //Forge BugFix: Make it respect stack sizes properly.
+			if (this.inventory[1] != null) {
+				if (!this.inventory[1].isItemEqual(itemstack)) canProcess = false;
+				int result = inventory[1].stackSize + itemstack.stackSize;
+				canProcess = result <= getInventoryStackLimit() && result <= this.inventory[1].getMaxStackSize();
 			}
 		}
 		return canProcess;
@@ -169,17 +168,15 @@ public class Tile extends TileEntity implements ISidedInventory {
 	public void processItem(){
 		if(this.canProcess()){
 			ItemStack i = FurnaceRecipes.smelting().getSmeltingResult(this.inventory[0]);
-			if (this.inventory[2] == null){
-				this.inventory[2] = i.copy();
-			}else if(this.inventory[2].getItem() == i.getItem()){
-				this.inventory[2].stackSize += i.stackSize;
+			if (this.inventory[1] == null){
+				this.inventory[1] = i.copy();
+			}else if(this.inventory[1].getItem() == i.getItem()){
+				this.inventory[1].stackSize += i.stackSize;
 			}
 
 			this.inventory[0].stackSize--;
 
-			if(this.inventory[0].stackSize < 0){
-				this.inventory[0] = null;
-			}
+			if(this.inventory[0].stackSize < 0) this.inventory[0] = null;
 		}
 	}
 
@@ -191,20 +188,9 @@ public class Tile extends TileEntity implements ISidedInventory {
 		if (this.power > 0) this.power--;
 
 		if (!this.worldObj.isRemote){
-			if (this.power != 0 || this.inventory[1] != null && this.inventory[0] != null){
-				if (this.power == 0 && this.canProcess()){
-					if (this.power > 0){
-						flag1 = true;
-
-						if (this.inventory[1] != null){
-							this.inventory[1].stackSize--;
-							if (this.inventory[1].stackSize == 0)
-								this.inventory[1] = inventory[1].getItem().getContainerItem(inventory[1]);
-						}
-					}
-				}
-
-				if (this.power> 0 && this.canProcess()){
+			this.power = 100;
+			if (this.power != 0 && this.inventory[0] != null){
+				if (this.power > 0 && this.canProcess()){
 					this.processTime++;
 
 					if (this.processTime == 200){
@@ -219,7 +205,6 @@ public class Tile extends TileEntity implements ISidedInventory {
 
 			if (flag != this.power > 0){
 				flag1 = true;
-				BlockFurnace.updateFurnaceBlockState(this.power > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 			}
 		}
 

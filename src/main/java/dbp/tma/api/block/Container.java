@@ -3,6 +3,7 @@ package dbp.tma.api.block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -12,6 +13,19 @@ public class Container extends net.minecraft.inventory.Container {
 
 	public Container(InventoryPlayer playerInventory, Tile tile) {
 		this.tile = tile;
+		this.addSlotToContainer(new Slot(tile, 0, 56, 17));
+		this.addSlotToContainer(new SlotFurnace(playerInventory.player, tile, 1, 116, 35));
+		int i;
+
+		for (i = 0; i < 3; ++i){
+			for (int j = 0; j < 9; ++j){
+				this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+			}
+		}
+
+		for (i = 0; i < 9; ++i){
+			this.addSlotToContainer(new Slot(playerInventory, i, 8 + i * 18, 142));
+		}
 	}
 
 	@Override
