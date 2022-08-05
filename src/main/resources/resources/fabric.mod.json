@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "tma",
+  "version": "${version}",
+  "name": "Too Many APIs",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Dbp",
+    "UnixSupremacist"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+  "license": "LGPL3",
+  "icon": "assets/tma/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dbp.tma.Tma"
+    ]
+  }
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.7.10"
+  }
+}

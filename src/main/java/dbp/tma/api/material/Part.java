@@ -1,13 +1,13 @@
 package dbp.tma.api.material;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import dbp.tma.Reference;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.TextureRegistry;
+import net.minecraft.item.itemgroup.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.client.Texture;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 public class Part extends Item {
 	protected String name;
 	protected final HashMap<Integer, String> mats = new HashMap<>();
-	protected IIcon[] icon = new IIcon[255];
+	protected Texture[] icon = new Texture[255];
 	protected String modid;
 	protected boolean enabled = true;
 	protected int partSetID = 1;
@@ -28,7 +28,7 @@ public class Part extends Item {
 	protected final HashMap<String, HashMap<String, String>> settingsString = new HashMap<>();
 
 	public Part(String modid) {
-		this.setHasSubtypes(true);
+		//this.setHasSubtypes(true);
 		this.modid = modid;
 	}
 
@@ -67,10 +67,10 @@ public class Part extends Item {
 	}
 
 	@Override
-	public void registerIcons(IIconRegister register) {
-		this.icon[0] = register.registerIcon(this.modid + ":item_" + this.name);
+	public void method_5462(TextureRegistry register) {
+		this.icon[0] = register.registerTexture(this.modid + ":item_" + this.name);
 		for (Entry<String, Integer> partSet : this.partSets.entrySet()) {
-			this.icon[partSet.getValue()] = register.registerIcon(this.modid + ":" + partSet.getKey() + "/item_" + this.name);
+			this.icon[partSet.getValue()] = register.registerTexture(this.modid + ":" + partSet.getKey() + "/item_" + this.name);
 		}
 	}
 
@@ -87,21 +87,21 @@ public class Part extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack item) {
-		return "item." + this.modid + this.mats.get(item.getItemDamage()) + "_" + this.name;
+	public String getItemstackTranslatedName(ItemStack item) {
+		return "item." + this.modid + this.mats.get(item.getDamage()) + "_" + this.name;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
-	public int getColorFromItemStack(ItemStack itemStack, int u) {
-		if (this.colors.containsKey(itemStack.getItemDamage())) {
-			return this.colors.get(itemStack.getItemDamage());
+	public int getDisplayColor(ItemStack itemStack, int u) {
+		if (this.colors.containsKey(itemStack.getDamage())) {
+			return this.colors.get(itemStack.getDamage());
 		}
 		return 0xFFFFFF;
 	}
 
 	@Override
-	public IIcon getIconFromDamage(int meta) {
+	public Texture method_3343(int meta) {
 		if (this.matSet.containsKey(meta)) {
 			return this.icon[this.partSets.get(this.matSet.get(meta))];
 		}
@@ -128,7 +128,7 @@ public class Part extends Item {
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tabs, List itemList) {
+	public void appendItemStacks(Item item, ItemGroup tabs, List itemList) {
 		for (int i = 1; i <= this.mats.size(); i++) {
 			itemList.add(new ItemStack(this, 1, i));
 		}

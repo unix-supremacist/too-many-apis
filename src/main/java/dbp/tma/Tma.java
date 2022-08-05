@@ -1,11 +1,5 @@
 package dbp.tma;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import dbp.tma.api.block.CropBase;
 import dbp.tma.api.block.Machine;
 import dbp.tma.api.block.Tile;
@@ -14,7 +8,7 @@ import dbp.tma.api.gui.handler;
 import dbp.tma.api.item.meta.MetaSeedFoodItem;
 import dbp.tma.api.material.Registery;
 import dbp.tma.events.EventListens;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
